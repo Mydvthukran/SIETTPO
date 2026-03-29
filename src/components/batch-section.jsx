@@ -1,13 +1,11 @@
 import { motion } from 'framer-motion'
+import { useLanguage } from '../contexts/LanguageContext'
+import { translations } from '../translations'
 
-const branches = [
-  { name: 'Computer Science & Engineering (AI & ML)', students: 60, color: 'var(--gold)' },
-  { name: 'Computer Science & Engineering (Cyber Security)', students: 60, color: 'var(--ink)' },
-  { name: 'Robotics & Automation', students: 60, color: 'var(--charcoal)' },
-]
-
-const maxStudents = Math.max(...branches.map(b => b.students))
-const totalStudents = branches.reduce((sum, b) => sum + b.students, 0)
+const branchColors = ['var(--gold)', 'var(--ink)', 'var(--charcoal)']
+const branchStudents = [60, 60, 60]
+const maxStudents = 60
+const totalStudents = 180
 
 const skills = [
   'Web Development', 'AI / ML', 'Data Structures & Algorithms', 'Embedded Systems',
@@ -17,11 +15,10 @@ const skills = [
   'Machine Learning', 'Cybersecurity', 'UI/UX Design', 'Node.js & Backend',
 ]
 
-/* Simple SVG pie chart */
 const malePercent = 68
 const femalePercent = 32
 
-function PieChart() {
+function PieChart({ studentsLabel }) {
   const r = 50
   const c = 2 * Math.PI * r
   const maleArc = (malePercent / 100) * c
@@ -51,12 +48,15 @@ function PieChart() {
       />
       {/* Center label */}
       <text x="70" y="66" textAnchor="middle" className="batch-pie-total">{totalStudents}</text>
-      <text x="70" y="82" textAnchor="middle" className="batch-pie-label">Students</text>
+      <text x="70" y="82" textAnchor="middle" className="batch-pie-label">{studentsLabel}</text>
     </svg>
   )
 }
 
 export function BatchSection() {
+  const { lang } = useLanguage()
+  const t = translations[lang].batch
+
   return (
     <section id="batch" className="batch-section">
       <div className="container">
@@ -67,8 +67,8 @@ export function BatchSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <span className="section-label">Current Cohort</span>
-          <h2 className="section-title">Institute Demographics and skill sets</h2>
+          <span className="section-label">{t.sectionLabel}</span>
+          <h2 className="section-title">{t.sectionTitle}</h2>
         </motion.div>
 
         <div className="batch-grid-3">
@@ -80,22 +80,22 @@ export function BatchSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h3 className="batch-card-heading">Branch-wise Strength</h3>
+            <h3 className="batch-card-heading">{t.branchStrength}</h3>
             <div className="batch-bars">
-              {branches.map((branch, i) => (
-                <div key={branch.name} className="batch-bar-row">
-                  <span className="batch-bar-label">{branch.name}</span>
+              {t.branches.map((name, i) => (
+                <div key={name} className="batch-bar-row">
+                  <span className="batch-bar-label">{name}</span>
                   <div className="batch-bar-track">
                     <motion.div
                       className="batch-bar-fill"
-                      style={{ backgroundColor: branch.color }}
+                      style={{ backgroundColor: branchColors[i] }}
                       initial={{ width: 0 }}
-                      whileInView={{ width: `${(branch.students / maxStudents) * 100}%` }}
+                      whileInView={{ width: `${(branchStudents[i] / maxStudents) * 100}%` }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.8, delay: i * 0.1 }}
                     />
                   </div>
-                  <span className="batch-bar-count">{branch.students}</span>
+                  <span className="batch-bar-count">{branchStudents[i]}</span>
                 </div>
               ))}
             </div>
@@ -109,16 +109,16 @@ export function BatchSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h3 className="batch-card-heading">Gender Ratio</h3>
-            <PieChart />
+            <h3 className="batch-card-heading">{t.genderRatio}</h3>
+            <PieChart studentsLabel={t.studentsLabel} />
             <div className="batch-pie-legend">
               <div className="batch-pie-legend-item">
                 <span className="batch-pie-dot" style={{ background: 'var(--ink)' }} />
-                <span>Male — {malePercent}%</span>
+                <span>{t.male} — {malePercent}%</span>
               </div>
               <div className="batch-pie-legend-item">
                 <span className="batch-pie-dot" style={{ background: 'var(--gold)' }} />
-                <span>Female — {femalePercent}%</span>
+                <span>{t.female} — {femalePercent}%</span>
               </div>
             </div>
           </motion.div>
@@ -131,7 +131,7 @@ export function BatchSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h3 className="batch-card-heading">Top Skills Across the Batch</h3>
+            <h3 className="batch-card-heading">{t.topSkills}</h3>
             <div className="batch-skills-cloud">
               {skills.map((skill, i) => (
                 <motion.span

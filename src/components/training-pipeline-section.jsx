@@ -1,16 +1,14 @@
 import { motion } from 'framer-motion'
 import { BookOpen, Code, Users, Briefcase, Target, Award } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
+import { translations } from '../translations'
 
-const stages = [
-  { icon: BookOpen, title: 'Aptitude & Reasoning', desc: 'Foundation modules in quantitative aptitude, logical reasoning, and verbal ability from Semester 1.' },
-  { icon: Code, title: 'Technical Upskilling', desc: 'Hands-on workshops in DSA, web development, and domain-specific tools led by industry mentors.' },
-  { icon: Users, title: 'Soft Skills & Communication', desc: 'Group discussions, mock presentations, and business communication training each semester.' },
-  { icon: Target, title: 'Mock Interviews', desc: 'Panel-based mock interviews simulating real placement scenarios with personalized feedback.' },
-  { icon: Briefcase, title: 'Industry Exposure', desc: 'Guest lectures, industrial visits, and expert seminars from companies like P&G, EDWise, and more.' },
-  { icon: Award, title: 'Placement Readiness', desc: 'Final resume reviews, company-specific prep, and dress code & etiquette grooming sessions.' },
-]
+const icons = [BookOpen, Code, Users, Target, Briefcase, Award]
 
 export function TrainingPipelineSection() {
+  const { lang } = useLanguage()
+  const t = translations[lang].pipeline
+
   return (
     <section id="pipeline" className="pipeline-section">
       <div className="container">
@@ -21,16 +19,14 @@ export function TrainingPipelineSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <span className="section-label">How We Prepare Students</span>
-          <h2 className="section-title">Training Pipeline</h2>
-          <p className="section-subtitle">
-            A structured, semester-wise training roadmap that takes students from fundamentals to placement-ready.
-          </p>
+          <span className="section-label">{t.sectionLabel}</span>
+          <h2 className="section-title">{t.sectionTitle}</h2>
+          <p className="section-subtitle">{t.sectionSubtitle}</p>
         </motion.div>
 
         <div className="pipeline-grid">
-          {stages.map((stage, i) => {
-            const Icon = stage.icon
+          {t.stages.map((stage, i) => {
+            const Icon = icons[i]
             return (
               <motion.div
                 key={stage.title}

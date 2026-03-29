@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { GradientButton } from './ui/gradient-button'
+import { useLanguage } from '../contexts/LanguageContext'
+import { translations } from '../translations'
 
 function AnimatedCounter({ end, duration = 2000, suffix = '' }) {
   const [count, setCount] = useState(0)
@@ -36,6 +38,9 @@ function AnimatedCounter({ end, duration = 2000, suffix = '' }) {
 }
 
 export function HeroSection() {
+  const { lang } = useLanguage()
+  const t = translations[lang].hero
+
   return (
     <section className="hero-section">
       <div className="hero-background">
@@ -50,36 +55,36 @@ export function HeroSection() {
 
       <div className="hero-content-centered">
         <span className="hero-label">
-          SIET Panchkula
+          {t.label}
         </span>
-        <h2 className="hero-branding">Training &amp; Placement Cell</h2>
+        <h2 className="hero-branding">{t.branding}</h2>
         <h1 className="hero-headline">
-          Your Career Starts Here
+          {t.headline}
         </h1>
         <p className="hero-subtext">
-          Dedicated to helping SIET students land the right opportunities through skill development and direct recruiter engagement.
+          {t.subtext}
         </p>
 
         <div className="hero-stats">
           <div className="hero-stat">
             <AnimatedCounter end={300} suffix="+" />
-            <span className="hero-stat-label">Total Students</span>
+            <span className="hero-stat-label">{t.totalStudents}</span>
           </div>
           <div className="hero-stat-divider" />
           <div className="hero-stat">
             <AnimatedCounter end={3} />
-            <span className="hero-stat-label">Branches</span>
+            <span className="hero-stat-label">{t.branches}</span>
           </div>
           <div className="hero-stat-divider" />
           <div className="hero-stat">
             <AnimatedCounter end={5} suffix="+" />
-            <span className="hero-stat-label">Years of Excellence</span>
+            <span className="hero-stat-label">{t.yearsOfExcellence}</span>
           </div>
         </div>
 
         <div className="hero-buttons">
-          <GradientButton onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>For Recruiters</GradientButton>
-          <GradientButton variant="variant" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>Download Brochure</GradientButton>
+          <GradientButton onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>{t.forRecruiters}</GradientButton>
+          <GradientButton variant="variant" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>{t.downloadBrochure}</GradientButton>
         </div>
       </div>
     </section>

@@ -2,18 +2,18 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Eye, EyeOff, AlertCircle, CheckCircle2 } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
+import { translations } from '../translations'
 
-const stats = [
-  { value: '300+', label: 'Students' },
-  { value: '3', label: 'Branches' },
-  { value: '5+', label: 'Years' },
-]
+const statsValues = ['300+', '3', '5+']
 
 export default function StudentLogin() {
   const [form, setForm] = useState({ rollNumber: '', password: '' })
   const [showPassword, setShowPassword] = useState(false)
   const [remember, setRemember] = useState(false)
   const [status, setStatus] = useState(null) // null | 'loading' | 'error' | 'success'
+  const { lang } = useLanguage()
+  const t = translations[lang].login
 
   function handleChange(e) {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
@@ -49,28 +49,28 @@ export default function StudentLogin() {
           <img src="/images/siet-logo.png" alt="SIET Panchkula" />
           <div>
             <p className="login-left-brand-name">
-              State Institute of Engineering<br />&amp; Technology, Panchkula
+              {t.brandName.split('\n').map((line, i) => (
+                <span key={i}>{line}{i === 0 && <br />}</span>
+              ))}
             </p>
-            <p className="login-left-brand-sub">Training &amp; Placement Cell</p>
+            <p className="login-left-brand-sub">{t.brandSub}</p>
           </div>
         </div>
 
         {/* Headline */}
         <div className="login-left-content">
           <h2 className="login-left-headline">
-            Your <em>career</em><br />starts here.
+            {t.headline}
           </h2>
-          <p className="login-left-desc">
-            Access your TPC portal to track placement drives, submit your profile, and stay updated on upcoming opportunities.
-          </p>
+          <p className="login-left-desc">{t.desc}</p>
         </div>
 
         {/* Stats */}
         <div className="login-left-stats">
-          {stats.map(s => (
-            <div key={s.label}>
-              <p className="login-left-stat-value">{s.value}</p>
-              <p className="login-left-stat-label">{s.label}</p>
+          {statsValues.map((value, i) => (
+            <div key={t.statsLabels[i]}>
+              <p className="login-left-stat-value">{value}</p>
+              <p className="login-left-stat-label">{t.statsLabels[i]}</p>
             </div>
           ))}
         </div>
@@ -86,15 +86,13 @@ export default function StudentLogin() {
         >
           {/* Back link */}
           <Link to="/" className="login-back-link">
-            <ArrowLeft /> Back to home
+            <ArrowLeft /> {t.backToHome}
           </Link>
 
           {/* Heading */}
-          <p className="login-eyebrow">TPC Student Portal</p>
-          <h1 className="login-title">Student Login</h1>
-          <p className="login-subtitle">
-            Sign in with your institution roll number and TPC password.
-          </p>
+          <p className="login-eyebrow">{t.eyebrow}</p>
+          <h1 className="login-title">{t.title}</h1>
+          <p className="login-subtitle">{t.subtitle}</p>
 
           {/* Alert */}
           {status === 'error' && (
@@ -105,7 +103,7 @@ export default function StudentLogin() {
               style={{ marginBottom: '1.25rem' }}
             >
               <AlertCircle />
-              Invalid roll number or password. Please try again or contact the TPO.
+              {t.errorMsg}
             </motion.div>
           )}
           {status === 'success' && (
@@ -116,20 +114,20 @@ export default function StudentLogin() {
               style={{ marginBottom: '1.25rem' }}
             >
               <CheckCircle2 />
-              Login successful! Redirecting to your dashboard…
+              {t.successMsg}
             </motion.div>
           )}
 
           {/* Form */}
           <form className="login-form" onSubmit={handleSubmit} noValidate>
             <div className="login-field">
-              <label htmlFor="rollNumber" className="login-label">Roll Number</label>
+              <label htmlFor="rollNumber" className="login-label">{t.rollNumberLabel}</label>
               <input
                 id="rollNumber"
                 name="rollNumber"
                 type="text"
                 className="login-input"
-                placeholder="e.g. 2210001"
+                placeholder={t.rollNumberPlaceholder}
                 autoComplete="username"
                 value={form.rollNumber}
                 onChange={handleChange}
@@ -137,14 +135,14 @@ export default function StudentLogin() {
             </div>
 
             <div className="login-field">
-              <label htmlFor="password" className="login-label">Password</label>
+              <label htmlFor="password" className="login-label">{t.passwordLabel}</label>
               <div className="login-input-wrap">
                 <input
                   id="password"
                   name="password"
                   type={showPassword ? 'text' : 'password'}
                   className="login-input"
-                  placeholder="Enter your password"
+                  placeholder={t.passwordPlaceholder}
                   autoComplete="current-password"
                   value={form.password}
                   onChange={handleChange}
@@ -167,9 +165,9 @@ export default function StudentLogin() {
                   checked={remember}
                   onChange={e => setRemember(e.target.checked)}
                 />
-                Remember me
+                {t.rememberMe}
               </label>
-              <a href="#" className="login-forgot" onClick={e => e.preventDefault()}>Forgot password?</a>
+              <a href="#" className="login-forgot" onClick={e => e.preventDefault()}>{t.forgotPassword}</a>
             </div>
 
             <button
@@ -177,18 +175,18 @@ export default function StudentLogin() {
               className="login-submit"
               disabled={status === 'loading'}
             >
-              {status === 'loading' ? 'Signing in…' : 'Sign In'}
+              {status === 'loading' ? t.signingIn : t.signIn}
             </button>
           </form>
 
           <div className="login-divider" style={{ marginTop: '1.5rem' }}>
-            <span>Need help?</span>
+            <span>{t.needHelp}</span>
           </div>
 
           <p className="login-notice">
-            Contact the TPO at{' '}
+            {t.contactNotice}{' '}
             <a href="mailto:tpo@sietpanchkula.ac.in">tpo@sietpanchkula.ac.in</a>
-            {' '}or call{' '}
+            {' '}{t.orCall}{' '}
             <a href="tel:+919253289394">+91 92532 89394</a>.
           </p>
         </motion.div>
