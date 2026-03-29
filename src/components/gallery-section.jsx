@@ -55,11 +55,8 @@ const events = [
     cover: '/images/siet-campus.jpg',
     images: [
       { src: '/images/siet-campus.jpg',      caption: 'SIET Panchkula — Main Academic Block' },
-      { src: '/images/campus-hero.jpg',      caption: 'Campus Aerial View' },
-      { src: '/images/campus-library.jpg',   caption: 'Central Library — Knowledge Hub' },
-      { src: '/images/iot-lab.jpg',          caption: 'IoT Research Lab' },
-      { src: '/images/seminar-hall.jpg',     caption: 'Seminar Hall — 350+ Seating' },
-      { src: '/images/project-workshop.jpg', caption: 'Project Workshop' },
+      { src: '/images/gallery/Campus/campus-1.jpeg', caption: 'SIET Panchkula Campus' },
+      { src: '/images/gallery/Campus/campus-2.jpeg', caption: 'SIET Panchkula Campus Highlights' },
     ],
   },
 ]
