@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import { Navbar } from './components/navbar'
+import Chatbot from './components/Chatbot'
 import { HeroSection } from './components/hero-section'
 import { SkillsMarquee } from './components/skills-marquee'
 import { MessageSection } from './components/message-section'
@@ -26,6 +27,7 @@ function Home() {
       <GallerySection />
       <TeamSection />
       <Footer />
+      <Chatbot />
     </main>
   )
 }

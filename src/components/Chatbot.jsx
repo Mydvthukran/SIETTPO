@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { MessageCircle, X, Send, Bot, User } from 'lucide-react'
+import { MessageCircle, X, Send, Bot } from 'lucide-react'
 
 const INITIAL_MESSAGES = [
   {
@@ -19,12 +19,227 @@ const QUICK_REPLIES = [
 
 function getBotResponse(message) {
   const lower = message.toLowerCase()
-  if (lower.includes('admission') || lower.includes('apply')) return 'Admissions for 2026-27 are now open! We offer B.Tech in CSE (AI & ML), CSE (Cyber Security), and Robotics. Apply through the State Counselling Portal.'
-  if (lower.includes('course') || lower.includes('program')) return 'We offer B.Tech programs in:\n1. CSE (AI & ML)\n2. CSE (Cyber Security)\n3. Robotics & Automation'
-  if (lower.includes('fee')) return 'Fee details are updated annually. Please contact +91 1733 266333 or visit Admissions section.'
-  if (lower.includes('contact')) return '📍 Sector 26, Panchkula\n📞 +91 1733 266333\n📧 info@sietpanchkula.ac.in'
-  if (lower.includes('hi') || lower.includes('hello')) return 'Hello! How can I assist you with SIET Panchkula?'
-  return 'Thanks for your query! For detailed information, please contact +91 1733 266333.'
+  if (lower.includes('admission') || lower.includes('apply'))
+    return 'Admissions for 2026-27 are now open! We offer B.Tech in CSE (AI & ML), CSE (Cyber Security), and Robotics. Apply through the State Counselling Portal.'
+  if (lower.includes('course') || lower.includes('program'))
+    return 'We offer B.Tech programs in:\n1. CSE (AI & ML)\n2. CSE (Cyber Security)\n3. Robotics & Automation'
+  if (lower.includes('fee'))
+    return 'Fee details are updated annually. Please contact +91 1733 266333 or visit the Admissions section.'
+  if (lower.includes('contact'))
+    return '📍 Sector 26, Panchkula\n📞 +91 1733 266333\n📧 tpo@sietpanchkula.ac.in'
+  if (lower.includes('hi') || lower.includes('hello'))
+    return 'Hello! How can I assist you with SIET Panchkula?'
+  return 'Thanks for your query! For detailed information, please contact +91 1733 266333 or email tpo@sietpanchkula.ac.in.'
+}
+
+const styles = {
+  wrapper: {
+    position: 'fixed',
+    bottom: '1.5rem',
+    right: '1.5rem',
+    zIndex: 9999,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+  },
+  window: {
+    width: '360px',
+    maxWidth: 'calc(100vw - 2rem)',
+    height: '500px',
+    display: 'flex',
+    flexDirection: 'column',
+    marginBottom: '1rem',
+    border: '1px solid rgba(201,146,42,0.25)',
+    borderRadius: '0.25rem',
+    overflow: 'hidden',
+    background: 'var(--surface-container-lowest)',
+    boxShadow: '0 20px 48px rgba(10,22,40,0.18)',
+    animation: 'chatbot-fadein 0.25s ease',
+  },
+  header: {
+    background: 'var(--ink)',
+    padding: '1rem 1.25rem',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.75rem',
+    borderBottom: '2px solid var(--gold)',
+  },
+  headerAvatar: {
+    width: '2.25rem',
+    height: '2.25rem',
+    borderRadius: '50%',
+    background: 'rgba(201,146,42,0.15)',
+    border: '1.5px solid var(--gold)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+  },
+  headerTitle: {
+    fontFamily: 'var(--font-headline)',
+    fontWeight: 700,
+    fontSize: '0.9rem',
+    color: 'var(--parchment)',
+    letterSpacing: '0.02em',
+  },
+  headerStatus: {
+    fontSize: '0.65rem',
+    color: 'var(--gold)',
+    fontFamily: 'var(--font-body)',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.3rem',
+    marginTop: '0.1rem',
+    textTransform: 'uppercase',
+    letterSpacing: '0.08em',
+  },
+  headerDot: {
+    width: '0.4rem',
+    height: '0.4rem',
+    borderRadius: '50%',
+    background: 'var(--gold)',
+    display: 'inline-block',
+  },
+  closeBtn: {
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    color: 'rgba(245,240,232,0.6)',
+    padding: '0.25rem',
+    display: 'flex',
+    alignItems: 'center',
+    transition: 'color 0.18s',
+  },
+  messages: {
+    flex: 1,
+    overflowY: 'auto',
+    padding: '1rem',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.875rem',
+    background: 'var(--surface-container-low)',
+  },
+  msgRow: (role) => ({
+    display: 'flex',
+    gap: '0.5rem',
+    justifyContent: role === 'user' ? 'flex-end' : 'flex-start',
+    alignItems: 'flex-end',
+  }),
+  botAvatar: {
+    width: '1.75rem',
+    height: '1.75rem',
+    borderRadius: '50%',
+    background: 'var(--ink)',
+    border: '1.5px solid var(--gold)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+  },
+  bubble: (role) => ({
+    maxWidth: '80%',
+    padding: '0.625rem 0.875rem',
+    fontSize: '0.8rem',
+    lineHeight: '1.55',
+    fontFamily: 'var(--font-body)',
+    borderRadius: role === 'user' ? '0.75rem 0.75rem 0.125rem 0.75rem' : '0.75rem 0.75rem 0.75rem 0.125rem',
+    background: role === 'user' ? 'var(--ink)' : 'var(--surface-container-lowest)',
+    color: role === 'user' ? 'var(--parchment)' : 'var(--deep-text)',
+    borderLeft: role === 'bot' ? '2px solid var(--gold)' : 'none',
+    boxShadow: '0 2px 8px rgba(10,22,40,0.06)',
+  }),
+  timestamp: (role) => ({
+    fontSize: '0.6rem',
+    marginTop: '0.25rem',
+    textAlign: 'right',
+    color: role === 'user' ? 'rgba(245,240,232,0.5)' : 'var(--muted-foreground)',
+    fontFamily: 'var(--font-body)',
+  }),
+  typingBubble: {
+    background: 'var(--surface-container-lowest)',
+    borderLeft: '2px solid var(--gold)',
+    padding: '0.625rem 0.875rem',
+    borderRadius: '0.75rem 0.75rem 0.75rem 0.125rem',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.3rem',
+    boxShadow: '0 2px 8px rgba(10,22,40,0.06)',
+  },
+  typingDot: {
+    width: '0.45rem',
+    height: '0.45rem',
+    borderRadius: '50%',
+    background: 'var(--gold)',
+  },
+  quickReplies: {
+    padding: '0.5rem 1rem 0.625rem',
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '0.4rem',
+    background: 'var(--surface-container-low)',
+    borderTop: '1px solid rgba(201,146,42,0.12)',
+  },
+  quickBtn: {
+    fontSize: '0.68rem',
+    fontFamily: 'var(--font-body)',
+    fontWeight: 700,
+    padding: '0.3rem 0.75rem',
+    borderRadius: '0.125rem',
+    border: '1.5px solid var(--gold)',
+    background: 'transparent',
+    color: 'var(--gold)',
+    cursor: 'pointer',
+    textTransform: 'uppercase',
+    letterSpacing: '0.07em',
+    transition: 'background 0.18s, color 0.18s',
+  },
+  inputArea: {
+    padding: '0.75rem 1rem',
+    borderTop: '1px solid rgba(10,22,40,0.1)',
+    background: 'var(--surface-container-lowest)',
+    display: 'flex',
+    gap: '0.5rem',
+    alignItems: 'center',
+  },
+  input: {
+    flex: 1,
+    fontSize: '0.8rem',
+    fontFamily: 'var(--font-body)',
+    padding: '0.5rem 0.875rem',
+    borderRadius: '0.125rem',
+    border: '1.5px solid rgba(10,22,40,0.12)',
+    background: 'var(--surface-container-low)',
+    color: 'var(--deep-text)',
+    outline: 'none',
+  },
+  sendBtn: (disabled) => ({
+    width: '2.25rem',
+    height: '2.25rem',
+    borderRadius: '0.125rem',
+    background: disabled ? 'rgba(201,146,42,0.3)' : 'var(--gold)',
+    border: 'none',
+    color: disabled ? 'rgba(10,22,40,0.4)' : 'var(--ink)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: disabled ? 'not-allowed' : 'pointer',
+    transition: 'background 0.18s',
+    flexShrink: 0,
+  }),
+  toggleBtn: {
+    width: '3.25rem',
+    height: '3.25rem',
+    borderRadius: '50%',
+    background: 'var(--ink)',
+    border: '2px solid var(--gold)',
+    color: 'var(--gold)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+    boxShadow: '0 8px 24px rgba(10,22,40,0.22)',
+    transition: 'transform 0.18s, box-shadow 0.18s',
+  },
 }
 
 export default function Chatbot() {
@@ -74,112 +289,134 @@ export default function Chatbot() {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-[9999] flex flex-col items-end">
-      {/* Chat Window */}
-      {isOpen && (
-        <div className="w-[360px] max-w-[calc(100vw-2rem)] bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col mb-4 animate-in slide-in-from-bottom-5 fade-in duration-300" style={{ height: '500px' }}>
-          {/* Header */}
-          <div className="bg-accent px-5 py-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-site-bg flex items-center justify-center">
-              <Bot size={20} className="text-accent-dark" />
-            </div>
-            <div className="flex-1">
-              <h3 className="text-white font-bold text-sm">SIET Assistant</h3>
-              <p className="text-emerald-300 text-[10px] font-medium flex items-center gap-1">
-                <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full inline-block" />
-                Online
-              </p>
-            </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="text-white/80 hover:text-white transition-colors p-1"
-            >
-              <X size={18} />
-            </button>
-          </div>
+    <>
+      <style>{`
+        @keyframes chatbot-fadein {
+          from { opacity: 0; transform: translateY(12px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        .chatbot-close-btn:hover { color: var(--parchment) !important; }
+        .chatbot-quick-btn:hover { background: var(--gold) !important; color: var(--ink) !important; }
+        .chatbot-send-btn:not(:disabled):hover { filter: brightness(0.9); }
+        .chatbot-toggle-btn:hover { transform: scale(1.06); box-shadow: 0 12px 32px rgba(10,22,40,0.3); }
+        .chatbot-input:focus { border-color: var(--gold) !important; box-shadow: 0 0 0 2px rgba(201,146,42,0.2); }
+        .chatbot-typing-dot { animation: chatbot-bounce 1.2s infinite; }
+        .chatbot-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .chatbot-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes chatbot-bounce {
+          0%, 80%, 100% { transform: translateY(0); opacity: 0.5; }
+          40% { transform: translateY(-4px); opacity: 1; }
+        }
+      `}</style>
 
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 bg-slate-50">
-            {messages.map((msg) => (
-              <div key={msg.id} className={`flex gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                {msg.role === 'bot' && (
-                  <div className="w-7 h-7 rounded-full bg-accent flex items-center justify-center shrink-0 mt-1">
-                    <Bot size={14} className="text-white" />
-                  </div>
-                )}
-                <div
-                  className={`max-w-[80%] px-4 py-2.5 text-sm leading-relaxed ${
-                    msg.role === 'user'
-                      ? 'bg-accent text-white rounded-2xl rounded-tr-sm'
-                      : 'bg-white text-slate-700 rounded-2xl rounded-tl-sm shadow-sm border border-slate-100'
-                  }`}
-                >
-                  <p className="whitespace-pre-line">{msg.text}</p>
-                  <p className={`text-[10px] mt-1 text-right ${msg.role === 'user' ? 'text-blue-100' : 'text-slate-400'}`}>
-                    {msg.time}
-                  </p>
+      <div style={styles.wrapper}>
+        {/* Chat Window */}
+        {isOpen && (
+          <div style={styles.window}>
+            {/* Header */}
+            <div style={styles.header}>
+              <div style={styles.headerAvatar}>
+                <Bot size={16} color="var(--gold)" />
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={styles.headerTitle}>SIET Assistant</div>
+                <div style={styles.headerStatus}>
+                  <span style={styles.headerDot} />
+                  Online
                 </div>
               </div>
-            ))}
-            {isTyping && (
-              <div className="flex gap-2 justify-start">
-                <div className="w-7 h-7 rounded-full bg-accent flex items-center justify-center shrink-0 mt-1">
-                  <Bot size={14} className="text-white" />
+              <button
+                style={styles.closeBtn}
+                className="chatbot-close-btn"
+                onClick={() => setIsOpen(false)}
+                aria-label="Close chat"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Messages */}
+            <div style={styles.messages}>
+              {messages.map((msg) => (
+                <div key={msg.id} style={styles.msgRow(msg.role)}>
+                  {msg.role === 'bot' && (
+                    <div style={styles.botAvatar}>
+                      <Bot size={12} color="var(--gold)" />
+                    </div>
+                  )}
+                  <div style={styles.bubble(msg.role)}>
+                    <p style={{ whiteSpace: 'pre-line' }}>{msg.text}</p>
+                    <p style={styles.timestamp(msg.role)}>{msg.time}</p>
+                  </div>
                 </div>
-                <div className="bg-white px-4 py-3 rounded-2xl rounded-tl-sm shadow-sm border border-slate-100 flex items-center gap-1">
-                  <span className="w-2 h-2 bg-slate-400 rounded-full animate-pulse" />
-                  <span className="w-2 h-2 bg-slate-400 rounded-full animate-pulse delay-75" />
-                  <span className="w-2 h-2 bg-slate-400 rounded-full animate-pulse delay-150" />
+              ))}
+
+              {isTyping && (
+                <div style={styles.msgRow('bot')}>
+                  <div style={styles.botAvatar}>
+                    <Bot size={12} color="var(--gold)" />
+                  </div>
+                  <div style={styles.typingBubble}>
+                    <span style={styles.typingDot} className="chatbot-typing-dot" />
+                    <span style={styles.typingDot} className="chatbot-typing-dot" />
+                    <span style={styles.typingDot} className="chatbot-typing-dot" />
+                  </div>
                 </div>
+              )}
+
+              <div ref={messagesEndRef} />
+            </div>
+
+            {/* Quick Replies */}
+            {messages.length <= 1 && (
+              <div style={styles.quickReplies}>
+                {QUICK_REPLIES.map((reply) => (
+                  <button
+                    key={reply}
+                    style={styles.quickBtn}
+                    className="chatbot-quick-btn"
+                    onClick={() => sendMessage(reply)}
+                  >
+                    {reply}
+                  </button>
+                ))}
               </div>
             )}
-            <div ref={messagesEndRef} />
+
+            {/* Input */}
+            <form onSubmit={handleSubmit} style={styles.inputArea}>
+              <input
+                ref={inputRef}
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Type your message..."
+                style={styles.input}
+                className="chatbot-input"
+              />
+              <button
+                type="submit"
+                disabled={!input.trim()}
+                style={styles.sendBtn(!input.trim())}
+                className="chatbot-send-btn"
+                aria-label="Send message"
+              >
+                <Send size={15} />
+              </button>
+            </form>
           </div>
+        )}
 
-          {/* Quick Replies */}
-          {messages.length <= 1 && (
-            <div className="px-4 pb-2 flex flex-wrap gap-2 bg-slate-50">
-              {QUICK_REPLIES.map((reply) => (
-                <button
-                  key={reply}
-                  onClick={() => sendMessage(reply)}
-                  className="text-[11px] font-medium px-3 py-1.5 rounded-full border border-accent/20 text-accent hover:bg-accent hover:text-white transition-colors"
-                >
-                  {reply}
-                </button>
-              ))}
-            </div>
-          )}
-
-          {/* Input */}
-          <form onSubmit={handleSubmit} className="px-4 py-3 border-t border-slate-100 bg-white flex gap-2 items-center">
-            <input
-              ref={inputRef}
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Type your message..."
-              className="flex-1 text-sm px-4 py-2.5 rounded-full bg-slate-50 border border-slate-200 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent"
-            />
-            <button
-              type="submit"
-              disabled={!input.trim()}
-              className="w-10 h-10 rounded-full bg-accent text-white flex items-center justify-center hover:bg-accent-dark disabled:opacity-50 transition-colors shrink-0"
-            >
-              <Send size={16} />
-            </button>
-          </form>
-        </div>
-      )}
-
-      {/* Toggle Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 rounded-full bg-accent text-white shadow-2xl flex items-center justify-center hover:bg-accent-dark transition-transform hover:scale-105"
-        aria-label="Toggle chat"
-      >
-        {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
-      </button>
-    </div>
+        {/* Toggle Button */}
+        <button
+          style={styles.toggleBtn}
+          className="chatbot-toggle-btn"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle chat"
+        >
+          {isOpen ? <X size={22} /> : <MessageCircle size={22} />}
+        </button>
+      </div>
+    </>
   )
 }
