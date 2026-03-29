@@ -9,7 +9,7 @@ const tpo = {
   name: 'Dr. Divya Singla',
   role: 'TPC Coordinator',
   email: 'sietpkl@gmail.com',
-  phone: '0172-2929871',
+  phone: '+91 92532 89394',
 }
 
 const roles = [
