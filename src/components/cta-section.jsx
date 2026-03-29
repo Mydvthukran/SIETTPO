@@ -1,11 +1,16 @@
 import { motion } from 'framer-motion'
 import { GradientButton } from './ui/gradient-button'
+import { useLanguage } from '../contexts/LanguageContext'
+import { translations } from '../translations'
 
 function scrollTo(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
 }
 
 export function CtaSection() {
+  const { lang } = useLanguage()
+  const t = translations[lang].cta
+
   return (
     <section id="recruit-cta" className="cta-section">
       <motion.div
@@ -16,17 +21,17 @@ export function CtaSection() {
         transition={{ duration: 0.5 }}
       >
         <h2 className="cta-title">
-          Ready to hire the future?
+          {t.title}
         </h2>
         <p className="cta-description">
-          Connect with our Training &amp; Placement Office to schedule a campus drive, request student profiles, or learn about partnership opportunities.
+          {t.description}
         </p>
         <div className="cta-button-wrapper">
           <a href="mailto:tpo@sietpanchkula.ac.in" className="cta-link">
-            <GradientButton>Apply to Hire</GradientButton>
+            <GradientButton>{t.applyToHire}</GradientButton>
           </a>
           <GradientButton variant="variant" onClick={() => scrollTo('contact')}>
-            Contact Us
+            {t.contactUs}
           </GradientButton>
         </div>
       </motion.div>

@@ -1,18 +1,15 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, X, Calendar, MapPin } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
+import { translations } from '../translations'
 
 /* ─────────────────────────────────────────────
    EVENT DATA — To add a new event, just append
    an object to this array. That's it.
    ───────────────────────────────────────────── */
-const events = [
+const eventImages = [
   {
-    title: 'EDWise Overseas Education Seminar',
-    subtitle: 'Overseas Education Consultants',
-    description: 'India\'s leading overseas education consultants conducted a seminar on international admission processes, IELTS/GRE prep, and study-abroad scholarships for engineering students.',
-    date: 'February 2026',
-    location: 'Seminar Hall, SIET Panchkula',
     cat: 'Events',
     cover: '/images/gallery/EDWise/EDwise7.jpeg',
     images: [
@@ -28,11 +25,6 @@ const events = [
     ],
   },
   {
-    title: 'P&G Gillette Guard Safalta Program',
-    subtitle: 'Expert Lecture by Gillette India',
-    description: 'Procter & Gamble\'s Gillette Guard Safalta Program — an expert lecture on interview preparation, professional grooming, and corporate etiquette for final-year students.',
-    date: 'March 16, 2026',
-    location: 'Conference Room, SIET Panchkula',
     cat: 'Events',
     cover: '/images/gallery/PnG Gillete India/3.jpeg',
     images: [
@@ -46,11 +38,6 @@ const events = [
     ],
   },
   {
-    title: 'Campus & Infrastructure',
-    subtitle: 'SIET Panchkula Facilities',
-    description: 'A visual tour of SIET Panchkula\'s modern academic block, IoT research lab, central library, seminar hall, and project workshop spaces.',
-    date: '',
-    location: 'SIET Panchkula Campus',
     cat: 'Campus',
     cover: '/images/siet-campus.jpg',
     images: [
@@ -60,8 +47,6 @@ const events = [
     ],
   },
 ]
-
-const categories = ['All', 'Events', 'Campus']
 
 /* ─── Lightbox Carousel ─── */
 function Lightbox({ event, onClose }) {
@@ -149,10 +134,27 @@ function Lightbox({ event, onClose }) {
 
 /* ─── Gallery Section ─── */
 export function GallerySection() {
-  const [active, setActive] = useState('All')
-  const [lightboxEvent, setLightboxEvent] = useState(null)
+  const [active, setActive] = useState('all')
+  const [lightboxIndex, setLightboxIndex] = useState(null)
+  const { lang } = useLanguage()
+  const t = translations[lang].gallery
 
-  const filtered = active === 'All' ? events : events.filter(e => e.cat === active)
+  const categories = [
+    { key: 'all', label: t.filterAll },
+    { key: 'Events', label: t.filterEvents },
+    { key: 'Campus', label: t.filterCampus },
+  ]
+
+  const events = eventImages.map((e, i) => ({
+    ...e,
+    title: t.events[i].title,
+    subtitle: t.events[i].subtitle,
+    description: t.events[i].description,
+    date: t.events[i].date,
+    location: t.events[i].location,
+  }))
+
+  const filtered = active === 'all' ? events : events.filter(e => e.cat === active)
 
   return (
     <section id="gallery" className="gallery-section">
@@ -164,22 +166,20 @@ export function GallerySection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <span className="section-label">Highlights</span>
-          <h2 className="section-title">Events & Gallery</h2>
-          <p className="section-subtitle">
-            Selected events, drives, and campus highlights from SIET Panchkula.
-          </p>
+          <span className="section-label">{t.sectionLabel}</span>
+          <h2 className="section-title">{t.sectionTitle}</h2>
+          <p className="section-subtitle">{t.sectionSubtitle}</p>
         </motion.div>
 
         {/* Filter Tabs */}
         <div className="gallery-tabs">
           {categories.map(cat => (
             <button
-              key={cat}
-              className={`gallery-tab ${active === cat ? 'gallery-tab-active' : ''}`}
-              onClick={() => setActive(cat)}
+              key={cat.key}
+              className={`gallery-tab ${active === cat.key ? 'gallery-tab-active' : ''}`}
+              onClick={() => setActive(cat.key)}
             >
-              {cat}
+              {cat.label}
             </button>
           ))}
         </div>
@@ -195,9 +195,9 @@ export function GallerySection() {
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
             >
-              <div className="event-card-image-wrap" onClick={() => setLightboxEvent(event)}>
+              <div className="event-card-image-wrap" onClick={() => setLightboxIndex(events.indexOf(event))}>
                 <img src={event.cover} alt={event.title} className="event-card-image" />
-                <div className="event-card-image-count">{event.images.length} photos</div>
+                <div className="event-card-image-count">{event.images.length} {t.photosLabel}</div>
               </div>
               <div className="event-card-body">
                 <h3 className="event-card-title">{event.title}</h3>
@@ -213,8 +213,8 @@ export function GallerySection() {
                     <MapPin className="event-card-meta-icon" /> {event.location}
                   </span>
                 </div>
-                <button className="event-card-link" onClick={() => setLightboxEvent(event)}>
-                  View Gallery →
+                <button className="event-card-link" onClick={() => setLightboxIndex(events.indexOf(event))}>
+                  {t.viewGallery}
                 </button>
               </div>
             </motion.div>
@@ -224,8 +224,8 @@ export function GallerySection() {
 
       {/* Lightbox */}
       <AnimatePresence>
-        {lightboxEvent && (
-          <Lightbox event={lightboxEvent} onClose={() => setLightboxEvent(null)} />
+        {lightboxIndex !== null && (
+          <Lightbox event={events[lightboxIndex]} onClose={() => setLightboxIndex(null)} />
         )}
       </AnimatePresence>
     </section>

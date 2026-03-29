@@ -1,15 +1,15 @@
 import { motion } from 'framer-motion'
 import { FileText, ClipboardList, UserCheck, Briefcase, CheckCircle } from 'lucide-react'
 import { GradientButton } from './ui/gradient-button'
+import { useLanguage } from '../contexts/LanguageContext'
+import { translations } from '../translations'
 
-const steps = [
-  { icon: ClipboardList, label: 'Register', desc: 'Company registers with TPC' },
-  { icon: UserCheck, label: 'Shortlist', desc: 'Students screened & shortlisted' },
-  { icon: Briefcase, label: 'Interview', desc: 'Technical & HR rounds conducted' },
-  { icon: CheckCircle, label: 'Offer', desc: 'Offer letters rolled out' },
-]
+const stepIcons = [ClipboardList, UserCheck, Briefcase, CheckCircle]
 
 export function GuidelinesSection() {
+  const { lang } = useLanguage()
+  const t = translations[lang].guidelines
+
   return (
     <section className="guidelines-section">
       <div className="container">
@@ -20,8 +20,8 @@ export function GuidelinesSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <span className="section-label">Recruitment Process</span>
-          <h2 className="section-title">TPC Guidelines</h2>
+          <span className="section-label">{t.sectionLabel}</span>
+          <h2 className="section-title">{t.sectionTitle}</h2>
         </motion.div>
 
         {/* 4-step timeline */}
@@ -32,8 +32,8 @@ export function GuidelinesSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          {steps.map((step, i) => {
-            const Icon = step.icon
+          {t.steps.map((step, i) => {
+            const Icon = stepIcons[i]
             return (
               <div key={step.label} className="guidelines-step">
                 <div className="guidelines-step-icon">
@@ -41,7 +41,7 @@ export function GuidelinesSection() {
                 </div>
                 <h4 className="guidelines-step-label">{step.label}</h4>
                 <p className="guidelines-step-desc">{step.desc}</p>
-                {i < steps.length - 1 && <div className="guidelines-step-connector" />}
+                {i < t.steps.length - 1 && <div className="guidelines-step-connector" />}
               </div>
             )
           })}
@@ -55,15 +55,13 @@ export function GuidelinesSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <p className="guidelines-text">
-            The Training &amp; Placement Cell follows a structured recruitment policy to ensure a smooth and transparent hiring process. Companies are requested to share the Job Description beforehand. Pre-placement talks, online/offline tests, and interviews are facilitated on campus. Our team ensures end-to-end coordination — from scheduling to offer rollout.
-          </p>
+          <p className="guidelines-text">{t.bodyText}</p>
           <div className="guidelines-buttons">
             <GradientButton>
-              <FileText className="guidelines-btn-icon" /> Recruitment Process PDF
+              <FileText className="guidelines-btn-icon" /> {t.recruitmentPdf}
             </GradientButton>
             <GradientButton variant="variant">
-              <FileText className="guidelines-btn-icon" /> TPC Guidelines PDF
+              <FileText className="guidelines-btn-icon" /> {t.guidelinesPdf}
             </GradientButton>
           </div>
         </motion.div>

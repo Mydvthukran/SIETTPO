@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion'
+import { useLanguage } from '../contexts/LanguageContext'
+import { translations } from '../translations'
 import {
   Code2,
   Cpu,
@@ -12,28 +14,22 @@ import {
   Smartphone
 } from 'lucide-react'
 
-const skills = [
-  { name: 'Python', icon: Terminal },
-  { name: 'Java', icon: Code2 },
-  { name: 'React', icon: Globe },
-  { name: 'AWS', icon: Cloud },
-  { name: 'C++', icon: Layers },
-  { name: 'AutoCAD', icon: Cog },
-  { name: 'AI / ML', icon: BrainCircuit },
-  { name: 'IoT', icon: Cpu },
-  { name: 'SQL', icon: Database },
-  { name: 'Mobile Dev', icon: Smartphone },
-]
+const skillIcons = [Terminal, Code2, Globe, Cloud, Layers, Cog, BrainCircuit, Cpu, Database, Smartphone]
+const skillNames = ['Python', 'Java', 'React', 'AWS', 'C++', 'AutoCAD', 'AI / ML', 'IoT', 'SQL', 'Mobile Dev']
 
+const skills = skillNames.map((name, i) => ({ name, icon: skillIcons[i] }))
 const doubled = [...skills, ...skills]
 
 export function SkillsMarquee() {
+  const { lang } = useLanguage()
+  const t = translations[lang].skills
+
   return (
     <section className="skills-marquee">
       <div className="container">
         <div className="skills-header">
           <p className="skills-header-text">
-            Core Competencies & Technical Stack
+            {t.header}
           </p>
         </div>
       </div>

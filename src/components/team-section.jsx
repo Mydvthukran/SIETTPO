@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion'
-import { Mail, Phone, Linkedin } from 'lucide-react'
+import { Mail, Phone } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
+import { translations } from '../translations'
 
 /* ─────────────────────────────────────────────
    TEAM DATA — From SIET-PKL/2026/536 Notice
@@ -7,56 +9,48 @@ import { Mail, Phone, Linkedin } from 'lucide-react'
    ───────────────────────────────────────────── */
 const tpo = {
   name: 'Dr. Divya Singla',
-  role: 'TPC Coordinator',
   email: 'sietpkl@gmail.com',
   phone: '+91 92532 89394',
 }
 
-const roles = [
+const rolesData = [
   {
-    designation: 'Student Placement Head',
     members: [
       { name: 'Shan', year: '3rd Year', branch: 'AIML' },
       { name: 'Aditi', year: '3rd Year', branch: 'CS' },
     ],
   },
   {
-    designation: 'Deputy Placement Head',
     members: [
       { name: 'Nishith', year: '2nd Year', branch: 'AIML' },
       { name: 'Pranjal', year: '3rd Year', branch: 'AIML' },
     ],
   },
   {
-    designation: 'Company Relation Coordinator',
     members: [
       { name: 'Saloni', year: '2nd Year', branch: 'AIML' },
       { name: 'Aman Dhiman', year: '3rd Year', branch: 'AIML' },
     ],
   },
   {
-    designation: 'Training & Skill Development',
     members: [
       { name: 'Aditya', year: '2nd Year', branch: 'AIML' },
       { name: 'Deepender', year: '3rd Year', branch: 'CS' },
     ],
   },
   {
-    designation: 'Data & Documentation',
     members: [
       { name: 'Pankaj Sharma', year: '3rd Year', branch: 'AIML' },
       { name: 'Mansi', year: '2nd Year', branch: 'CS' },
     ],
   },
   {
-    designation: 'PR & Communication',
     members: [
       { name: 'Chhavik', year: '3rd Year', branch: 'AIML' },
       { name: 'Dipti', year: '2nd Year', branch: 'AIML' },
     ],
   },
   {
-    designation: 'Student Representatives',
     members: [
       { name: 'Nancy', year: '3rd Year', branch: 'AIML' },
       { name: 'Gagandeep', year: '2nd Year', branch: 'AIML' },
@@ -67,6 +61,9 @@ const roles = [
 ]
 
 export function TeamSection() {
+  const { lang } = useLanguage()
+  const t = translations[lang].team
+
   return (
     <section id="team" className="team-section">
       <div className="container">
@@ -77,11 +74,9 @@ export function TeamSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <span className="section-label">The People Behind It</span>
-          <h2 className="section-title">Training & Placement Committee</h2>
-          <p className="section-subtitle">
-            Constituted under Memo No. SIET-PKL/2026/536, dated 02.02.2026
-          </p>
+          <span className="section-label">{t.sectionLabel}</span>
+          <h2 className="section-title">{t.sectionTitle}</h2>
+          <p className="section-subtitle">{t.sectionSubtitle}</p>
         </motion.div>
 
         {/* TPO Card */}
@@ -97,7 +92,7 @@ export function TeamSection() {
           </div>
           <div className="team-tpo-info">
             <h3 className="team-tpo-name">{tpo.name}</h3>
-            <p className="team-tpo-role">{tpo.role}</p>
+            <p className="team-tpo-role">{t.tpoRole}</p>
             <div className="team-tpo-contact">
               <a href={`mailto:${tpo.email}`} className="team-contact-link">
                 <Mail className="team-icon" /> {tpo.email}
@@ -111,9 +106,9 @@ export function TeamSection() {
 
         {/* Roles Grid */}
         <div className="team-roles-grid">
-          {roles.map((role, i) => (
+          {rolesData.map((role, i) => (
             <motion.div
-              key={role.designation}
+              key={t.designations[i]}
               className="team-role-card"
               initial={{ opacity: 0, scale: 0.9, y: 25 }}
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
@@ -125,7 +120,7 @@ export function TeamSection() {
                 delay: i * 0.08 
               }}
             >
-              <h4 className="team-role-title">{role.designation}</h4>
+              <h4 className="team-role-title">{t.designations[i]}</h4>
               <div className="team-role-members">
                 {role.members.map(m => (
                   <div key={m.name} className="team-member-row">

@@ -1,30 +1,12 @@
 import { motion } from 'framer-motion'
 import { ImageIcon } from 'lucide-react'
-
-const facilities = [
-  {
-    title: 'IoT Lab',
-    caption: 'Smart sensors, microcontrollers, and embedded systems.',
-    size: '400 x 300',
-  },
-  {
-    title: 'Seminar Hall',
-    caption: 'Industry talks and tech workshops.',
-    size: '400 x 300',
-  },
-  {
-    title: 'Project Workshop',
-    caption: 'Collaborative maker space for prototyping.',
-    size: '400 x 300',
-  },
-  {
-    title: 'Campus Library',
-    caption: 'Digital and print resources for research.',
-    size: '400 x 300',
-  },
-]
+import { useLanguage } from '../contexts/LanguageContext'
+import { translations } from '../translations'
 
 export function InfrastructureSection() {
+  const { lang } = useLanguage()
+  const t = translations[lang].infrastructure
+
   return (
     <section id="infrastructure" className="infrastructure-section">
       <div className="container">
@@ -36,14 +18,14 @@ export function InfrastructureSection() {
           transition={{ duration: 0.5 }}
         >
           <p className="infrastructure-header-label">
-            Campus Facilities
+            {t.headerLabel}
           </p>
           <h2 className="infrastructure-title">
-            A Hub for Innovation.
+            {t.title}
           </h2>
         </motion.div>
         <div className="facility-grid">
-          {facilities.map((facility, i) => (
+          {t.facilities.map((facility, i) => (
             <motion.div
               key={facility.title}
               className="facility-card"
@@ -55,7 +37,7 @@ export function InfrastructureSection() {
               <div className="facility-placeholder">
                 <div className="flex flex-col items-center gap-2">
                   <ImageIcon className="facility-placeholder-icon" />
-                  <span className="facility-placeholder-size">{facility.size}</span>
+                  <span className="facility-placeholder-size">400 x 300</span>
                 </div>
               </div>
               <div className="facility-info">

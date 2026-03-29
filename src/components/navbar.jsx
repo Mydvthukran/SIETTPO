@@ -2,16 +2,8 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import { GradientButton } from './ui/gradient-button'
-
-const navLinks = [
-  { label: 'Home', href: '#' },
-  { label: 'About', href: '#messages' },
-  { label: 'Why SIET', href: '#why-recruit' },
-  { label: 'Batch 2025', href: '#batch' },
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'Team', href: '#team' },
-  { label: 'Contact', href: '#contact' },
-]
+import { useLanguage } from '../contexts/LanguageContext'
+import { translations } from '../translations'
 
 function scrollTo(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
@@ -21,6 +13,18 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const navigate = useNavigate()
+  const { lang, toggleLang } = useLanguage()
+  const t = translations[lang].navbar
+
+  const navLinks = [
+    { label: t.links[0], href: '#' },
+    { label: t.links[1], href: '#messages' },
+    { label: t.links[2], href: '#why-recruit' },
+    { label: t.links[3], href: '#batch' },
+    { label: t.links[4], href: '#gallery' },
+    { label: t.links[5], href: '#team' },
+    { label: t.links[6], href: '#contact' },
+  ]
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10)
@@ -78,7 +82,7 @@ export function Navbar() {
             className="mt-1 hidden sm:block"
             style={{ fontSize: 'clamp(0.65rem, 1vw, 0.82rem)', color: 'var(--muted-foreground)', textTransform: 'uppercase', letterSpacing: '0.1em' }}
           >
-            Approved by AICTE, New Delhi and Affiliated to Kurukshetra University, Kurukshetra
+            {t.affiliation}
           </p>
         </div>
 
@@ -96,7 +100,7 @@ export function Navbar() {
       {/* NAV BAR */}
       <nav className="navbar-nav">
         <a href="#" className="md:hidden">
-          <span className="navbar-mobile-label">Training and placement cell</span>
+          <span className="navbar-mobile-label">{t.mobileLabel}</span>
         </a>
         <div className="navbar-links">
           {navLinks.map((link) => (
@@ -106,8 +110,20 @@ export function Navbar() {
           ))}
         </div>
         <div className="navbar-buttons">
-          <GradientButton className="px-5 py-2.5 text-sm" onClick={() => scrollTo('recruit-cta')}>For Recruiters</GradientButton>
-          <GradientButton variant="variant" className="px-5 py-2.5 text-sm" onClick={() => navigate('/login')}>Student Login</GradientButton>
+          <div className="lang-toggle" role="group" aria-label="Language toggle">
+            <button
+              className={`lang-toggle-btn${lang === 'en' ? ' lang-toggle-btn-active' : ''}`}
+              onClick={() => lang !== 'en' && toggleLang()}
+              title="English"
+            >A</button>
+            <button
+              className={`lang-toggle-btn${lang === 'hi' ? ' lang-toggle-btn-active' : ''}`}
+              onClick={() => lang !== 'hi' && toggleLang()}
+              title="हिंदी"
+            >अ</button>
+          </div>
+          <GradientButton className="px-5 py-2.5 text-sm" onClick={() => scrollTo('recruit-cta')}>{t.forRecruiters}</GradientButton>
+          <GradientButton variant="variant" className="px-5 py-2.5 text-sm" onClick={() => navigate('/login')}>{t.studentLogin}</GradientButton>
         </div>
         <button
           className="navbar-mobile-toggle"
@@ -132,8 +148,20 @@ export function Navbar() {
             </a>
           ))}
           <div className="navbar-mobile-menu-actions">
-            <GradientButton className="w-full" onClick={() => { scrollTo('recruit-cta'); setMobileOpen(false) }}>For Recruiters</GradientButton>
-            <GradientButton variant="variant" className="w-full" onClick={() => { navigate('/login'); setMobileOpen(false) }}>Student Login</GradientButton>
+            <div className="lang-toggle" role="group" aria-label="Language toggle">
+              <button
+                className={`lang-toggle-btn${lang === 'en' ? ' lang-toggle-btn-active' : ''}`}
+                onClick={() => lang !== 'en' && toggleLang()}
+                title="English"
+              >A</button>
+              <button
+                className={`lang-toggle-btn${lang === 'hi' ? ' lang-toggle-btn-active' : ''}`}
+                onClick={() => lang !== 'hi' && toggleLang()}
+                title="हिंदी"
+              >अ</button>
+            </div>
+            <GradientButton className="w-full" onClick={() => { scrollTo('recruit-cta'); setMobileOpen(false) }}>{t.forRecruiters}</GradientButton>
+            <GradientButton variant="variant" className="w-full" onClick={() => { navigate('/login'); setMobileOpen(false) }}>{t.studentLogin}</GradientButton>
           </div>
         </div>
       )}

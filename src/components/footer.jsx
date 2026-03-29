@@ -1,13 +1,13 @@
 import { Mail, Phone } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
+import { translations } from '../translations'
 
-const quickLinks = [
-  { label: 'Home', href: '#' },
-  { label: 'Academics', href: '#batch' },
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'Contact', href: '#contact' },
-]
+const quickLinkHrefs = ['#', '#batch', '#gallery', '#contact']
 
 export function Footer() {
+  const { lang } = useLanguage()
+  const t = translations[lang].footer
+
   return (
     <footer id="contact" className="footer">
       <div className="container">
@@ -15,23 +15,23 @@ export function Footer() {
           <div className="footer-col">
             <div>
               <span className="footer-logo">
-                State Institute of Engineering & Technology, Panchkula
+                {t.institutionName}
               </span>
-              <p className="footer-tagline">Training & Placement Office</p>
+              <p className="footer-tagline">{t.tagline}</p>
             </div>
             <p className="footer-description">
-              Bridging academia and industry by connecting skilled graduates with leading organizations across the country.
+              {t.description}
             </p>
           </div>
           <div className="footer-col">
             <h3 className="footer-heading">
-              Quick Links
+              {t.quickLinks}
             </h3>
             <ul className="footer-links">
-              {quickLinks.map((link) => (
-                <li key={link.label}>
-                  <a href={link.href}>
-                    {link.label}
+              {t.links.map((label, i) => (
+                <li key={label}>
+                  <a href={quickLinkHrefs[i]}>
+                    {label}
                   </a>
                 </li>
               ))}
@@ -39,7 +39,7 @@ export function Footer() {
           </div>
           <div className="footer-col">
             <h3 className="footer-heading">
-              Contact TPO
+              {t.contactTpo}
             </h3>
             <ul className="footer-contact">
               <li>
@@ -58,7 +58,7 @@ export function Footer() {
           </div>
         </div>
         <div className="footer-map-section">
-          <h3 className="footer-heading">Find Us</h3>
+          <h3 className="footer-heading">{t.findUs}</h3>
           <iframe
             className="footer-map"
             src="https://maps.google.com/maps?q=MV5J%2B9Q2%2C+Sector+26%2C+Panchkula+Extension%2C+Panchkula%2C+Haryana+134116&z=16&output=embed"
@@ -68,11 +68,9 @@ export function Footer() {
             referrerPolicy="no-referrer-when-downgrade"
           />
         </div>
-        <div className="footer-separator">
-          <p>
-            &copy; 2026 SIET Panchkula. Training &amp; Placement Office. All rights reserved.
-          </p>
-        </div>
+      </div>
+      <div className="footer-separator">
+        <p>{t.copyright}</p>
       </div>
     </footer>
   )
