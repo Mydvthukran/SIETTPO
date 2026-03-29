@@ -16,64 +16,81 @@ export function Navbar() {
   return (
     <header className="navbar">
       <div className="navbar-header">
-        <div className="navbar-header-left">
+
+        {/* LEFT LOGO — increased size, added min-width so it doesn't collapse */}
+        <div className="navbar-header-left" style={{ minWidth: '72px' }}>
           <img
             src="/images/siet-logo.png"
             alt="SIET Panchkula Logo"
-            className="h-12 w-auto object-contain sm:h-16 lg:h-24"
+            className="object-contain"
+            style={{ height: '80px', width: 'auto', maxWidth: '80px' }}
           />
         </div>
 
+        {/* CENTER TEXT */}
         <div className="navbar-header-center">
+          {/* Hindi name */}
           <p
-            className="text-xs font-bold leading-tight text-foreground sm:text-base lg:text-xl"
-            style={{ fontFamily: 'var(--font-tiro)' }}
+            className="leading-tight text-foreground"
+            style={{
+              fontFamily: 'var(--font-tiro)',
+              fontSize: 'clamp(0.75rem, 1.5vw, 1.1rem)',
+              fontWeight: '600',
+            }}
           >
-            {'राज्य अभियांत्रिकी एवं प्रौद्योगिकी संस्थान, पंचकुला'}
+            राज्य अभियांत्रिकी एवं प्रौद्योगिकी संस्थान, पंचकुला
           </p>
+
+          {/* English name — bolder, larger, tighter tracking for authority */}
           <h1
-            className="text-xs font-extrabold leading-tight tracking-tight text-foreground sm:text-lg lg:text-2xl"
-            style={{ fontFamily: 'var(--font-poppins)', fontWeight: '800' }}
+            className="leading-tight text-foreground"
+            style={{
+              fontFamily: 'var(--font-poppins)',
+              fontSize: 'clamp(0.85rem, 2vw, 1.35rem)',
+              fontWeight: '900',
+              letterSpacing: '-0.01em',
+              lineHeight: '1.2',
+            }}
           >
-            State Institute of Engineering & Technology, Panchkula
+            State Institute of Engineering &amp; Technology, Panchkula
           </h1>
-          <p className="mt-0.5 hidden text-xs text-muted-foreground sm:block lg:text-sm">
+
+          {/* Affiliation line */}
+          <p
+            className="mt-1 hidden text-muted-foreground sm:block"
+            style={{ fontSize: 'clamp(0.65rem, 1vw, 0.82rem)' }}
+          >
             Approved by AICTE, New Delhi and Affiliated to Kurukshetra University, Kurukshetra
           </p>
         </div>
 
-        <div className="navbar-header-right">
+        {/* RIGHT EMBLEM */}
+        <div className="navbar-header-right" style={{ minWidth: '72px' }}>
           <img
             src="/images/haryana-sarkar.png"
             alt="Haryana Government Emblem"
-            className="h-12 w-auto object-contain sm:h-16 lg:h-24"
-            style={{ maxWidth: '75px' }}
+            className="object-contain"
+            style={{ height: '80px', width: 'auto', maxWidth: '80px' }}
           />
         </div>
       </div>
 
+      {/* NAV BAR */}
       <nav className="navbar-nav">
         <a href="#" className="md:hidden">
           <span className="navbar-mobile-label">Training and placement cell</span>
         </a>
-
         <div className="navbar-links">
           {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="navbar-link"
-            >
+            <a key={link.label} href={link.href} className="navbar-link">
               {link.label}
             </a>
           ))}
         </div>
-
         <div className="navbar-buttons">
           <GradientButton className="px-5 py-2.5 text-sm">For Recruiters</GradientButton>
           <GradientButton variant="variant" className="px-5 py-2.5 text-sm">Student Login</GradientButton>
         </div>
-
         <button
           className="navbar-mobile-toggle"
           onClick={() => setMobileOpen(!mobileOpen)}
