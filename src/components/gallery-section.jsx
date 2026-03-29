@@ -9,6 +9,28 @@ const galleryItems = [
   { src: '/images/gallery/EDwise5.jpeg',  label: 'Dr. Divya with EDwise Team',           span: 'sm:col-span-2' },
 ]
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.4, 0, 0.2, 1],
+    },
+  },
+}
+
 export function GallerySection() {
   return (
     <section id="gallery" className="gallery-section">
@@ -31,15 +53,22 @@ export function GallerySection() {
           </p>
         </motion.div>
 
-        <div className="gallery-grid">
+        <motion.div
+          className="gallery-grid"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
           {galleryItems.map((item, i) => (
             <motion.div
               key={item.src}
               className={`gallery-item ${item.span === 'sm:col-span-2 sm:row-span-2' ? 'gallery-item-span-2 gallery-item-row-span-2' : item.span === 'sm:col-span-2' ? 'gallery-item-span-2' : ''}`}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.06 }}
+              variants={itemVariants}
+              whileHover={{
+                scale: 1.02,
+                transition: { duration: 0.3 },
+              }}
             >
               <img
                 src={item.src}
@@ -51,7 +80,7 @@ export function GallerySection() {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

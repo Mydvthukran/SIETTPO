@@ -6,7 +6,7 @@ export function HeroSection() {
   return (
     <section className="hero-section">
       <div className="hero-background">
-        <DotScreenShader dotColor="#c8d6e5" bgColor="#ffffff" dotOpacity={0.15} />
+        <DotScreenShader dotColor="#00ff87" bgColor="#0a0a0a" dotOpacity={0.12} />
       </div>
       <div className="hero-content">
         <motion.div

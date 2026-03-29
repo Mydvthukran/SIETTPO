@@ -28,6 +28,28 @@ const cards = [
   },
 ]
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+}
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.4, 0, 0.2, 1],
+    },
+  },
+}
+
 export function WhyRecruitSection() {
   return (
     <section id="academics" className="why-recruit-section">
@@ -46,17 +68,24 @@ export function WhyRecruitSection() {
             Why Recruit Here?
           </h2>
         </motion.div>
-        <div className="recruitment-cards">
+        <motion.div
+          className="recruitment-cards"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
           {cards.map((card, i) => {
             const Icon = card.icon
             return (
               <motion.div
                 key={card.title}
                 className={`recruitment-card ${card.span}`}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
+                variants={cardVariants}
+                whileHover={{
+                  scale: 1.02,
+                  transition: { duration: 0.2 },
+                }}
               >
                 <div className="recruitment-card-icon">
                   <Icon />
@@ -70,7 +99,7 @@ export function WhyRecruitSection() {
               </motion.div>
             )
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   )
