@@ -4,8 +4,10 @@ import { GradientButton } from './ui/gradient-button'
 
 const navLinks = [
   { label: 'Home', href: '#' },
-  { label: 'Academics', href: '#academics' },
-  { label: 'Infrastructure', href: '#infrastructure' },
+  { label: 'About', href: '#messages' },
+  { label: 'Why SIET', href: '#why-recruit' },
+  { label: 'Batch 2025', href: '#batch' },
+  { label: 'Team', href: '#team' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Contact', href: '#contact' },
 ]
@@ -31,11 +33,12 @@ export function Navbar() {
         <div className="navbar-header-center">
           {/* Hindi name */}
           <p
-            className="leading-tight text-foreground"
+            className="leading-tight"
             style={{
-              fontFamily: 'var(--font-tiro)',
+              fontFamily: 'var(--font-headline)',
               fontSize: 'clamp(0.75rem, 1.5vw, 1.1rem)',
-              fontWeight: '600',
+              fontWeight: '400',
+              color: 'var(--ink)',
             }}
           >
             राज्य अभियांत्रिकी एवं प्रौद्योगिकी संस्थान, पंचकुला
@@ -43,13 +46,15 @@ export function Navbar() {
 
           {/* English name — bolder, larger, tighter tracking for authority */}
           <h1
-            className="leading-tight text-foreground"
+            className="leading-tight"
             style={{
-              fontFamily: 'var(--font-poppins)',
+              fontFamily: 'var(--font-headline)',
               fontSize: 'clamp(0.85rem, 2vw, 1.35rem)',
-              fontWeight: '900',
+              fontWeight: '700',
               letterSpacing: '-0.01em',
               lineHeight: '1.2',
+              color: 'var(--ink)',
+              textTransform: 'uppercase',
             }}
           >
             State Institute of Engineering &amp; Technology, Panchkula
@@ -57,8 +62,8 @@ export function Navbar() {
 
           {/* Affiliation line */}
           <p
-            className="mt-1 hidden text-muted-foreground sm:block"
-            style={{ fontSize: 'clamp(0.65rem, 1vw, 0.82rem)' }}
+            className="mt-1 hidden sm:block"
+            style={{ fontSize: 'clamp(0.65rem, 1vw, 0.82rem)', color: 'var(--muted-foreground)', textTransform: 'uppercase', letterSpacing: '0.1em' }}
           >
             Approved by AICTE, New Delhi and Affiliated to Kurukshetra University, Kurukshetra
           </p>
@@ -96,7 +101,7 @@ export function Navbar() {
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
         >
-          {mobileOpen ? <X className="h-6 w-6 text-foreground" /> : <Menu className="h-6 w-6 text-foreground" />}
+          {mobileOpen ? <X className="h-6 w-6" style={{color:'var(--gold)'}} /> : <Menu className="h-6 w-6" style={{color:'var(--gold)'}} />}
         </button>
       </nav>
     </header>

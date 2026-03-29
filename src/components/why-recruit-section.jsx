@@ -1,72 +1,77 @@
-import { BookOpen, FlaskConical, Users, Rocket } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { ShieldCheck, Landmark, BookOpen, Cpu, Users, Dumbbell } from 'lucide-react'
 
 const cards = [
   {
+    title: 'AICTE Approved Institution',
+    description: 'Fully accredited by the All India Council for Technical Education, ensuring world-class curriculum standards and recognition.',
+    icon: ShieldCheck,
+  },
+  {
+    title: 'Haryana Government Backed',
+    description: 'Established and operated under the Department of Technical Education, Government of Haryana, offering institutional stability and trust.',
+    icon: Landmark,
+  },
+  {
     title: 'Industry-Aligned Curriculum',
-    description: 'Syllabus updated for 2026 demands, covering full-stack development, cloud infrastructure, and data science pipelines.',
+    description: 'Syllabi updated annually with inputs from industry consultants covering full-stack development, cloud infrastructure, and data science.',
     icon: BookOpen,
-    span: 'md:col-span-2',
   },
   {
-    title: 'Hands-on Labs',
-    description: 'State-of-the-art robotics, IoT, and computing labs for practical project-based learning.',
-    icon: FlaskConical,
-    span: '',
+    title: 'Modern Labs & Infrastructure',
+    description: 'State-of-the-art IoT labs, robotics workshops, computing centres, and seminar halls built for hands-on, project-based learning.',
+    icon: Cpu,
   },
   {
-    title: 'Soft Skills Focus',
-    description: 'Leadership, communication, and teamwork training modules integrated into every semester.',
+    title: 'Active Student Clubs',
+    description: 'Vibrant tech communities — AUTONEX, Byte Forge, Buildhub, and Mantrix — where students build real projects, compete nationally, and develop leadership skills.',
     icon: Users,
-    span: '',
   },
   {
-    title: 'Innovation-Driven Culture',
-    description: 'Hackathons, tech fests, and startup incubation programs foster an entrepreneurial mindset from day one.',
-    icon: Rocket,
-    span: 'md:col-span-2',
+    title: 'Rigorous Skill Training',
+    description: 'Mandatory aptitude, communication, and technical training modules embedded in every semester since first year.',
+    icon: Dumbbell,
   },
 ]
 
 export function WhyRecruitSection() {
   return (
-    <section id="academics" className="why-recruit-section">
+    <section id="why-recruit" className="why-recruit-section">
       <div className="container">
         <motion.div
-          className="why-recruit-header"
+          className="section-header"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <p className="why-recruit-header-label">
-            Why SIET Panchkula
-          </p>
-          <h2 className="why-recruit-title">
-            Why Recruit Here?
-          </h2>
+          <span className="section-label">Why SIET Panchkula</span>
+          <h2 className="section-title">Why Recruit Here?</h2>
+          <p className="section-subtitle">A legacy institution with modern capabilities — here's what sets our students apart.</p>
         </motion.div>
-        <div className="recruitment-cards">
+
+        <div className="why-recruit-grid">
           {cards.map((card, i) => {
             const Icon = card.icon
             return (
               <motion.div
                 key={card.title}
-                className={`recruitment-card ${card.span}`}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.1 }}
+                className="why-recruit-card"
+                initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ 
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 15,
+                  delay: i * 0.1 
+                }}
               >
-                <div className="recruitment-card-icon">
+                <div className="why-recruit-card-icon">
                   <Icon />
                 </div>
-                <h3 className="recruitment-card-title">
-                  {card.title}
-                </h3>
-                <p className="recruitment-card-description">
-                  {card.description}
-                </p>
+                <h3 className="why-recruit-card-title">{card.title}</h3>
+                <p className="why-recruit-card-desc">{card.description}</p>
               </motion.div>
             )
           })}

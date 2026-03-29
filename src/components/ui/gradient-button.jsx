@@ -9,9 +9,7 @@ export function GradientButton({
 }) {
   const baseClass = 'gradient-button'
   const variantClass = variant === 'secondary' || variant === 'variant' ? 'variant' : ''
-  // Ensure a fallback gradient if CSS is overridden or not loaded
-  const fallbackStyle = variantClass ? {} : { backgroundImage: 'var(--accent-gradient)' }
-  const mergedStyle = { ...fallbackStyle, ...style }
+  const mergedStyle = { ...style }
 
   return (
     <button 
