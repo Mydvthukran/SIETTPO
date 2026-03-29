@@ -17,13 +17,13 @@ export function Navbar() {
     <header className="navbar">
       <div className="navbar-header">
 
-        {/* LEFT LOGO — increased size, added min-width so it doesn't collapse */}
-        <div className="navbar-header-left" style={{ minWidth: '72px' }}>
+                {/* LEFT LOGO — increased size, added min-width so it doesn't collapse */}
+        <div className="navbar-header-left" style={{ minWidth: '90px', flexShrink: 0, display: 'flex', alignItems: 'center' }}>
           <img
             src="/images/siet-logo.png"
             alt="SIET Panchkula Logo"
             className="object-contain"
-            style={{ height: '80px', width: 'auto', maxWidth: '80px' }}
+            style={{ height: '80px', width: 'auto', flexShrink: 0 }}
           />
         </div>
 
