@@ -2,7 +2,7 @@ import { Mail, Phone } from 'lucide-react'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../translations'
 
-const quickLinkHrefs = ['#', '#batch', '#infrastructure', '#gallery', '#contact']
+const quickLinkHrefs = ['#', '#batch', '#gallery', '#contact']
 
 export function Footer() {
   const { lang } = useLanguage()
@@ -57,9 +57,20 @@ export function Footer() {
             </ul>
           </div>
         </div>
-        <div className="footer-separator">
-          <p>{t.copyright}</p>
+        <div className="footer-map-section">
+          <h3 className="footer-heading">{t.findUs}</h3>
+          <iframe
+            className="footer-map"
+            src="https://maps.google.com/maps?q=MV5J%2B9Q2%2C+Sector+26%2C+Panchkula+Extension%2C+Panchkula%2C+Haryana+134116&z=16&output=embed"
+            title="SIET Panchkula Location"
+            loading="lazy"
+            allowFullScreen
+            referrerPolicy="no-referrer-when-downgrade"
+          />
         </div>
+      </div>
+      <div className="footer-separator">
+        <p>{t.copyright}</p>
       </div>
     </footer>
   )

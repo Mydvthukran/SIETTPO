@@ -217,7 +217,8 @@ export const translations = {
         'Bridging academia and industry by connecting skilled graduates with leading organizations across the country.',
       quickLinks: 'Quick Links',
       contactTpo: 'Contact TPO',
-      links: ['Home', 'Academics', 'Infrastructure', 'Gallery', 'Contact'],
+      findUs: 'Find Us',
+      links: ['Home', 'Academics', 'Gallery', 'Contact'],
       copyright: '© 2026 SIET Panchkula. Training & Placement Office. All rights reserved.',
     },
     login: {
@@ -465,7 +466,8 @@ export const translations = {
         'देश भर के प्रमुख संगठनों के साथ कुशल स्नातकों को जोड़कर शिक्षा और उद्योग को जोड़ना।',
       quickLinks: 'त्वरित लिंक',
       contactTpo: 'TPO से संपर्क करें',
-      links: ['होम', 'शैक्षणिक', 'बुनियादी ढांचा', 'गैलरी', 'संपर्क'],
+      findUs: 'हमें खोजें',
+      links: ['होम', 'शैक्षणिक', 'गैलरी', 'संपर्क'],
       copyright:
         '© 2026 SIET पंचकुला। प्रशिक्षण एवं प्लेसमेंट कार्यालय। सर्वाधिकार सुरक्षित।',
     },
