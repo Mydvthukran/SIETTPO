@@ -48,7 +48,7 @@ export default function PdfViewer() {
       {/* Header */}
       <header className="bg-ink border-b border-border">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between gap-4 flex-wrap">
+          <div className="flex items-center justify-between gap-4">
             <button
               onClick={() => navigate(-1)}
               className="inline-flex items-center gap-2 text-parchment hover:text-gold transition-colors text-sm font-bold uppercase tracking-wider"
@@ -57,7 +57,7 @@ export default function PdfViewer() {
               Back
             </button>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 ml-auto">
               <GradientButton onClick={handleDownload}>
                 <Download className="w-4 h-4" />
                 Download PDF
@@ -84,21 +84,22 @@ export default function PdfViewer() {
 
         {/* PDF Embed Container */}
         <div className="bg-surface-container-lowest border border-border shadow-lg rounded-lg overflow-hidden">
-          <div className="aspect-[8.5/11] bg-surface-container-low flex items-center justify-center">
-            <div className="text-center p-8">
+          <div className="bg-surface-container-low flex items-center justify-center" style={{ minHeight: '85vh' }}>
+            <div className="text-center p-8 w-full h-full">
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gold bg-opacity-10 flex items-center justify-center">
                 <ExternalLink className="w-8 h-8 text-gold" />
               </div>
               <h2 className="text-xl font-headline text-foreground mb-2">
                 PDF Preview
               </h2>
-              <p className="text-sm text-muted-foreground mb-6 max-w-md">
+              <p className="text-sm text-muted-foreground mb-6 max-w-md mx-auto">
                 The PDF will be displayed here once uploaded to <code className="px-1 py-0.5 bg-surface-container rounded text-xs">/public/pdfs/</code> directory.
               </p>
               {/* This iframe will display the PDF once it's uploaded */}
               <iframe
                 src={currentPdf.pdfUrl}
-                className="w-full h-[70vh] border-0 hidden"
+                className="w-full border-0 hidden"
+                style={{ height: '85vh' }}
                 title={currentPdf.title}
                 onLoad={(e) => e.target.classList.remove('hidden')}
                 onError={(e) => {
