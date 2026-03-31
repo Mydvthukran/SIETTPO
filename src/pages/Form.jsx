@@ -1,194 +1,344 @@
-import React from 'react';
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { ArrowLeft } from 'lucide-react'
+import { Navbar } from '../components/navbar'
+import { Footer } from '../components/footer'
+import { useLanguage } from '../contexts/LanguageContext'
 
 export default function Form() {
+  const { lang } = useLanguage()
+  const [formData, setFormData] = useState({})
+
+  const handleChange = (e) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // Handle form submission
+    console.log('Form submitted:', formData)
+  }
+
   return (
-    <div className="bg-surface text-on-surface font-body selection:bg-secondary-fixed selection:text-on-secondary-fixed">
-      <main className="pt-28 pb-20">
+    <div className="inquiry-page">
+      <Navbar />
+
+      <main className="inquiry-main">
         {/* Hero Section */}
-        <header className="relative w-full max-w-7xl mx-auto px-6 md:px-12 py-12 md:py-20 overflow-hidden">
-          <div className="absolute -right-20 -top-20 w-96 h-96 bg-primary-container/5 rounded-full blur-3xl"></div>
-          <div className="relative z-10 flex flex-col md:flex-row items-center gap-12">
-            <div className="md:w-3/5">
-              <span className="inline-block px-4 py-1.5 rounded-full bg-secondary-fixed text-on-secondary-fixed text-xs font-bold tracking-widest uppercase mb-6">
-                Category Tag
-              </span>
-              <h1 className="text-5xl md:text-6xl font-['DM_Serif_Display'] text-primary-container leading-tight mb-6">
-                Main Form Heading&nbsp;<br />
-                <span className="text-secondary italic">Subheading Text</span>
-              </h1>
-              <p className="text-lg text-on-surface-variant max-w-xl leading-relaxed">
-                Introductory description goes here. Provide a brief overview of what this form is for and any instructions the user might need before filling it out.
-              </p>
-            </div>
-            <div className="md:w-2/5 w-full">
-              <div className="bg-surface-container-highest p-8 rounded-3xl border border-white shadow-xl rotate-3">
-                <div className="flex items-center gap-4 mb-4">
-                  <span className="material-symbols-outlined text-secondary scale-125" style={{ fontVariationSettings: "'FILL' 1" }}>
-                    stars
+        <header className="inquiry-hero">
+          {/* Academic grid texture */}
+          <div className="absolute inset-0 academic-grid pointer-events-none" aria-hidden="true" />
+
+          <div className="inquiry-container inquiry-hero-inner">
+            {/* Back link */}
+            <Link to="/" className="inquiry-back-link">
+              <ArrowLeft />
+              {lang === 'hi' ? 'होम पर वापस जाएँ' : 'Back to Home'}
+            </Link>
+
+            <div className="inquiry-hero-grid">
+              <div>
+                <span className="inquiry-eyebrow">
+                  {lang === 'hi' ? 'भर्तीकर्ताओं के लिए' : 'For Recruiters'}
+                </span>
+                <h1 className="inquiry-title">
+                  {lang === 'hi' ? 'भर्ती के लिए आवेदन करें' : 'Recruitment Inquiry Form'}
+                </h1>
+                <p className="inquiry-subtitle">
+                  {lang === 'hi'
+                    ? 'हमारे प्रतिभाशाली छात्रों को नियुक्त करने के लिए इस फॉर्म को पूरा करें। हम आपके साथ परिसर ड्राइव शेड्यूल करने और साझेदारी के अवसर तलाशने के लिए उत्सुक हैं।'
+                    : 'Complete this form to initiate the recruitment process with SIET Panchkula. We look forward to connecting you with our talented students and scheduling campus drives.'
+                  }
+                </p>
+              </div>
+              <div className="inquiry-note-card">
+                <div className="inquiry-note-title">
+                  <span className="material-symbols-outlined inquiry-note-icon" style={{ fontVariationSettings: "'FILL' 1" }}>
+                      stars
                   </span>
-                  <span className="font-bold text-primary-container">Highlight Title</span>
+                  <span>{lang === 'hi' ? 'महत्वपूर्ण' : 'Important'}</span>
                 </div>
-                <p className="text-sm text-on-surface-variant leading-relaxed">
-                  Important notice or highlight description text goes here to capture the user's attention.
+                <p className="inquiry-note-copy">
+                  {lang === 'hi'
+                    ? 'कृपया सभी आवश्यक फ़ील्ड सटीक रूप से भरें। हमारी टीम 2-3 कार्य दिवसों के भीतर आपसे संपर्क करेगी।'
+                    : 'Please fill all required fields accurately. Our team will contact you within 2-3 business days to discuss recruitment opportunities.'
+                  }
                 </p>
               </div>
             </div>
           </div>
         </header>
 
-        {/* Generic Form */}
-        <div className="max-w-5xl mx-auto px-6">
-          <form action="#" className="space-y-12">
-            {/* Section 1 */}
-            <section className="bg-surface-container-lowest rounded-2xl p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-outline-variant/10">
-              <div className="flex items-center gap-3 mb-10 border-b border-surface-container pb-6">
-                <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-secondary">
-                  <span className="material-symbols-outlined text-xl">domain</span>
+        {/* Form */}
+        <div className="inquiry-container inquiry-form-wrap">
+          <form onSubmit={handleSubmit} className="inquiry-form-stack">
+            {/* Company Information */}
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="inquiry-card"
+            >
+              <div className="inquiry-card-head">
+                <div className="inquiry-card-icon">
+                  <span className="material-symbols-outlined">domain</span>
                 </div>
-                <h2 className="text-2xl font-bold text-primary-container">Section 1 Title</h2>
+                <h2 className="inquiry-card-title">
+                  {lang === 'hi' ? 'कंपनी की जानकारी' : 'Company Information'}
+                </h2>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Input Label 1</label>
-                  <input className="soft-well h-12 px-4 rounded-t-lg focus:ring-0 text-primary-container font-medium" placeholder="Placeholder text..." type="text" />
+              <div className="inquiry-grid">
+                <div className="inquiry-field">
+                  <label className="inquiry-label">
+                    {lang === 'hi' ? 'कंपनी का नाम *' : 'Company Name *'}
+                  </label>
+                  <input
+                    className="inquiry-input"
+                    placeholder={lang === 'hi' ? 'कंपनी का नाम दर्ज करें' : 'Enter company name'}
+                    type="text"
+                    name="companyName"
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Input Label 2</label>
-                  <input className="soft-well h-12 px-4 rounded-t-lg focus:ring-0 text-primary-container font-medium" placeholder="Placeholder text..." type="url" />
+                <div className="inquiry-field">
+                  <label className="inquiry-label">
+                    {lang === 'hi' ? 'वेबसाइट' : 'Website'}
+                  </label>
+                  <input
+                    className="inquiry-input"
+                    placeholder={lang === 'hi' ? 'www.example.com' : 'www.example.com'}
+                    type="url"
+                    name="website"
+                    onChange={handleChange}
+                  />
                 </div>
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Dropdown Label</label>
-                  <select className="soft-well h-12 px-4 rounded-t-lg focus:ring-0 text-primary-container font-medium appearance-none">
-                    <option>Option 1</option>
-                    <option>Option 2</option>
-                    <option>Option 3</option>
-                    <option>Option 4</option>
+                <div className="inquiry-field">
+                  <label className="inquiry-label">
+                    {lang === 'hi' ? 'उद्योग क्षेत्र *' : 'Industry Sector *'}
+                  </label>
+                  <select
+                    className="inquiry-input"
+                    name="industry"
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">{lang === 'hi' ? 'चुनें' : 'Select'}</option>
+                    <option>IT & Software</option>
+                    <option>Manufacturing</option>
+                    <option>Consulting</option>
+                    <option>Finance</option>
+                    <option>{lang === 'hi' ? 'अन्य' : 'Other'}</option>
                   </select>
                 </div>
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Input Label 3</label>
-                  <input className="soft-well h-12 px-4 rounded-t-lg focus:ring-0 text-primary-container font-medium" placeholder="Placeholder text..." type="text" />
+                <div className="inquiry-field">
+                  <label className="inquiry-label">
+                    {lang === 'hi' ? 'कंपनी का आकार' : 'Company Size'}
+                  </label>
+                  <select
+                    className="inquiry-input"
+                    name="companySize"
+                    onChange={handleChange}
+                  >
+                    <option value="">{lang === 'hi' ? 'चुनें' : 'Select'}</option>
+                    <option>1-50 {lang === 'hi' ? 'कर्मचारी' : 'employees'}</option>
+                    <option>51-200 {lang === 'hi' ? 'कर्मचारी' : 'employees'}</option>
+                    <option>201-1000 {lang === 'hi' ? 'कर्मचारी' : 'employees'}</option>
+                    <option>1000+ {lang === 'hi' ? 'कर्मचारी' : 'employees'}</option>
+                  </select>
                 </div>
               </div>
-            </section>
+            </motion.section>
 
-            {/* Section 2 */}
-            <section className="bg-surface-container-lowest rounded-2xl p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-outline-variant/10">
-              <div className="flex items-center gap-3 mb-10 border-b border-surface-container pb-6">
-                <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-secondary">
-                  <span className="material-symbols-outlined text-xl">person</span>
+            {/* Contact Person Details */}
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
+              className="inquiry-card"
+            >
+              <div className="inquiry-card-head">
+                <div className="inquiry-card-icon">
+                  <span className="material-symbols-outlined">person</span>
                 </div>
-                <h2 className="text-2xl font-bold text-primary-container">Section 2 Title</h2>
+                <h2 className="inquiry-card-title">
+                  {lang === 'hi' ? 'संपर्क व्यक्ति विवरण' : 'Contact Person Details'}
+                </h2>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Input Label 1</label>
-                  <input className="soft-well h-12 px-4 rounded-t-lg focus:ring-0 text-primary-container font-medium" placeholder="Placeholder text..." type="text" />
+              <div className="inquiry-grid">
+                <div className="inquiry-field">
+                  <label className="inquiry-label">
+                    {lang === 'hi' ? 'पूरा नाम *' : 'Full Name *'}
+                  </label>
+                  <input
+                    className="inquiry-input"
+                    placeholder={lang === 'hi' ? 'नाम दर्ज करें' : 'Enter your name'}
+                    type="text"
+                    name="contactName"
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Input Label 2</label>
-                  <input className="soft-well h-12 px-4 rounded-t-lg focus:ring-0 text-primary-container font-medium" placeholder="Placeholder text..." type="text" />
+                <div className="inquiry-field">
+                  <label className="inquiry-label">
+                    {lang === 'hi' ? 'पदनाम *' : 'Designation *'}
+                  </label>
+                  <input
+                    className="inquiry-input"
+                    placeholder={lang === 'hi' ? 'जैसे HR Manager' : 'e.g., HR Manager'}
+                    type="text"
+                    name="designation"
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Email Label</label>
-                  <input className="soft-well h-12 px-4 rounded-t-lg focus:ring-0 text-primary-container font-medium" placeholder="email@example.com" type="email" />
+                <div className="inquiry-field">
+                  <label className="inquiry-label">
+                    {lang === 'hi' ? 'ईमेल *' : 'Email *'}
+                  </label>
+                  <input
+                    className="inquiry-input"
+                    placeholder="email@example.com"
+                    type="email"
+                    name="email"
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Phone Label</label>
-                  <input className="soft-well h-12 px-4 rounded-t-lg focus:ring-0 text-primary-container font-medium" placeholder="+1 XXXXX XXXXX" type="tel" />
+                <div className="inquiry-field">
+                  <label className="inquiry-label">
+                    {lang === 'hi' ? 'फोन नंबर *' : 'Phone Number *'}
+                  </label>
+                  <input
+                    className="inquiry-input"
+                    placeholder="+91 XXXXX XXXXX"
+                    type="tel"
+                    name="phone"
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
               </div>
-            </section>
+            </motion.section>
 
-            {/* Section 3 */}
-            <section className="bg-surface-container-lowest rounded-2xl p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-outline-variant/10">
-              <div className="flex items-center gap-3 mb-10 border-b border-surface-container pb-6">
-                <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-secondary">
-                  <span className="material-symbols-outlined text-xl">event_available</span>
+            {/* Recruitment Requirements */}
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className="inquiry-card"
+            >
+              <div className="inquiry-card-head">
+                <div className="inquiry-card-icon">
+                  <span className="material-symbols-outlined">work</span>
                 </div>
-                <h2 className="text-2xl font-bold text-primary-container">Section 3 Title</h2>
+                <h2 className="inquiry-card-title">
+                  {lang === 'hi' ? 'भर्ती आवश्यकताएं' : 'Recruitment Requirements'}
+                </h2>
               </div>
-              <div className="space-y-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                  <div className="flex flex-col gap-2">
-                    <label className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Dropdown Label</label>
-                    <select className="soft-well h-12 px-4 rounded-t-lg focus:ring-0 text-primary-container font-medium appearance-none">
-                      <option>Option A</option>
-                      <option>Option B</option>
-                      <option>Option C</option>
-                    </select>
+              <div className="inquiry-card-stack">
+                <div className="inquiry-grid">
+                  <div className="inquiry-field">
+                    <label className="inquiry-label">
+                      {lang === 'hi' ? 'भूमिका/पद *' : 'Role/Position *'}
+                    </label>
+                    <input
+                      className="inquiry-input"
+                      placeholder={lang === 'hi' ? 'जैसे Software Engineer' : 'e.g., Software Engineer'}
+                      type="text"
+                      name="role"
+                      onChange={handleChange}
+                      required
+                    />
                   </div>
-                  <div className="flex flex-col gap-2">
-                    <label className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Checkbox Group Label</label>
-                    <div className="flex gap-4 h-12 items-center">
-                      <label className="flex items-center gap-2 cursor-pointer group">
-                        <input className="w-5 h-5 rounded border-outline-variant text-secondary focus:ring-secondary/20" type="checkbox" />
-                        <span className="text-sm font-medium group-hover:text-secondary transition-colors">Checkbox 1</span>
-                      </label>
-                      <label className="flex items-center gap-2 cursor-pointer group">
-                        <input className="w-5 h-5 rounded border-outline-variant text-secondary focus:ring-secondary/20" type="checkbox" />
-                        <span className="text-sm font-medium group-hover:text-secondary transition-colors">Checkbox 2</span>
-                      </label>
-                    </div>
+                  <div className="inquiry-field">
+                    <label className="inquiry-label">
+                      {lang === 'hi' ? 'रिक्तियों की संख्या *' : 'Number of Positions *'}
+                    </label>
+                    <input
+                      className="inquiry-input"
+                      placeholder={lang === 'hi' ? 'संख्या दर्ज करें' : 'Enter number'}
+                      type="number"
+                      name="positions"
+                      onChange={handleChange}
+                      min="1"
+                      required
+                    />
                   </div>
                 </div>
-                <div className="flex flex-col gap-4">
-                  <label className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Multi-select / Tags Label</label>
-                  <div className="flex flex-wrap gap-3">
-                    {['Tag 1', 'Tag 2', 'Tag 3', 'Tag 4', 'Tag 5'].map((tag, idx) => (
-                      <button key={idx} className="px-6 py-2.5 rounded-full bg-primary-fixed text-on-primary-fixed text-sm font-bold border-2 border-transparent hover:border-secondary transition-all" type="button">
-                        {tag}
-                      </button>
+                <div className="inquiry-field inquiry-field-branches">
+                  <label className="inquiry-label">
+                    {lang === 'hi' ? 'इच्छित शाखाएँ' : 'Preferred Branches'}
+                  </label>
+                  <div className="inquiry-branch-grid">
+                    {[
+                      lang === 'hi' ? 'CS (AI & ML)' : 'CS (AI & ML)',
+                      lang === 'hi' ? 'CS (साइबर सुरक्षा)' : 'CS (Cyber Security)',
+                      lang === 'hi' ? 'रोबोटिक्स' : 'Robotics & Automation',
+                      lang === 'hi' ? 'सभी शाखाएँ' : 'All Branches'
+                    ].map((branch, idx) => (
+                      <label key={idx} className="inquiry-branch-option">
+                        <input type="checkbox" name={`branch-${idx}`} onChange={handleChange} />
+                        {branch}
+                      </label>
                     ))}
                   </div>
                 </div>
-              </div>
-            </section>
-
-            {/* Section 4 */}
-            <section className="bg-surface-container-lowest rounded-2xl p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-outline-variant/10">
-              <div className="flex items-center gap-3 mb-10 border-b border-surface-container pb-6">
-                <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-secondary">
-                  <span className="material-symbols-outlined text-xl">upload_file</span>
-                </div>
-                <h2 className="text-2xl font-bold text-primary-container">Section 4 Title</h2>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div className="flex flex-col gap-4">
-                  <label className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Upload Area 1</label>
-                  <div className="border-2 border-dashed border-outline-variant rounded-xl p-8 text-center hover:bg-surface-container-low transition-colors group cursor-pointer">
-                    <span className="material-symbols-outlined text-4xl text-outline mb-2 group-hover:text-secondary transition-colors">cloud_upload</span>
-                    <p className="text-sm font-medium text-on-surface-variant">Click to upload or drag &amp; drop</p>
-                    <p className="text-[10px] text-outline mt-1 uppercase">FILE FORMAT, MAX SIZE</p>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-4">
-                  <label className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Upload Area 2</label>
-                  <div className="border-2 border-dashed border-outline-variant rounded-xl p-8 text-center hover:bg-surface-container-low transition-colors group cursor-pointer">
-                    <span className="material-symbols-outlined text-4xl text-outline mb-2 group-hover:text-secondary transition-colors">description</span>
-                    <p className="text-sm font-medium text-on-surface-variant">Click to upload or drag &amp; drop</p>
-                    <p className="text-[10px] text-outline mt-1 uppercase">FILE FORMAT, MAX SIZE</p>
-                  </div>
+                <div className="inquiry-field">
+                  <label className="inquiry-label">
+                    {lang === 'hi' ? 'अतिरिक्त जानकारी' : 'Additional Information'}
+                  </label>
+                  <textarea
+                    className="inquiry-input inquiry-textarea"
+                    placeholder={lang === 'hi' ? 'नौकरी विवरण, पात्रता मानदंड, वेतन सीमा, आदि।' : 'Job description, eligibility criteria, salary range, etc.'}
+                    name="additionalInfo"
+                    onChange={handleChange}
+                    rows="5"
+                  />
                 </div>
               </div>
-            </section>
+            </motion.section>
 
             {/* Submission Area */}
-            <div className="flex flex-col items-center gap-6 pt-10">
-              <div className="flex items-start gap-3 max-w-2xl">
-                <input className="mt-1 w-5 h-5 rounded border-outline-variant text-secondary focus:ring-secondary/20" id="consent" type="checkbox" />
-                <label className="text-sm text-on-surface-variant leading-relaxed" htmlFor="consent">
-                  Agreement text goes here. The user must confirm this statement before being able to submit the form data successfully.
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+              className="inquiry-submit-wrap"
+            >
+              <div className="inquiry-consent">
+                <input
+                  className="inquiry-consent-check"
+                  id="consent"
+                  type="checkbox"
+                  required
+                />
+                <label className="inquiry-consent-label" htmlFor="consent">
+                  {lang === 'hi'
+                    ? 'मैं पुष्टि करता हूं कि प्रदान की गई जानकारी सटीक है और SIET पंचकुला के प्रशिक्षण एवं प्लेसमेंट कार्यालय को भर्ती अवसरों के लिए मुझसे संपर्क करने के लिए अधिकृत करता हूं।'
+                    : 'I confirm that the information provided is accurate and authorize SIET Panchkula Training & Placement Office to contact me regarding recruitment opportunities.'
+                  }
                 </label>
               </div>
-              <button className="w-full md:w-auto px-12 py-5 bg-gradient-to-r from-secondary to-secondary-container text-on-secondary font-bold text-lg rounded-full shadow-lg shadow-secondary/20 hover:scale-105 active:scale-95 transition-all" type="submit">
-                Submit Form Button
+              <button
+                className="inquiry-submit-btn"
+                type="submit"
+              >
+                {lang === 'hi' ? 'फॉर्म जमा करें' : 'Submit Application'}
               </button>
-              <p className="text-sm text-slate-500">Post-submission informational text or expected response time.</p>
-            </div>
+              <p className="inquiry-submit-note">
+                {lang === 'hi'
+                  ? 'हम 2-3 कार्य दिवसों के भीतर आपसे संपर्क करेंगे।'
+                  : 'We will contact you within 2-3 business days to discuss next steps.'
+                }
+              </p>
+            </motion.div>
           </form>
         </div>
       </main>
+
+      <Footer />
     </div>
-  );
+  )
 }
