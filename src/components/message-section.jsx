@@ -16,7 +16,11 @@ export function MessageSection() {
         {t.members.map((member) => (
           <blockquote key={member.name} className="message-hero-quote">
             <span className="message-hero-deco" aria-hidden="true">&ldquo;</span>
+            <div className="message-hero-photo-wrapper">
+              <img src="/placeholder-user.jpg" alt={member.name} className="message-hero-photo" />
+            </div>
             <p className="message-hero-text">{member.message}</p>
+            <span className="message-hero-deco message-hero-deco--close" aria-hidden="true">&rdquo;</span>
             <footer className="message-hero-attribution">
               <span className="message-hero-name">{member.name}</span>
               <span className="message-hero-designation">{member.designation}</span>

@@ -577,30 +577,53 @@ input:focus, textarea:focus, select:focus { outline: none; box-shadow: 0 0 0 2px
   margin:0;
   padding:0;
   border:none;
+  text-align:left;
+  overflow:hidden;
 }
 .message-hero-deco {
   display:block;
   font-family:Georgia,'Times New Roman',serif;
-  font-size:clamp(5rem,10vw,8rem);
-  line-height:0.75;
+  font-size:clamp(4rem,8vw,6rem);
+  line-height:0.8;
   color:var(--gold);
-  opacity:0.22;
-  margin-bottom:1.25rem;
+  opacity:0.25;
   user-select:none;
+}
+.message-hero-deco--close {
+  text-align:right;
+  margin-top:0.25rem;
+  margin-bottom:2rem;
+}
+.message-hero-photo-wrapper {
+  float:left;
+  width:148px;
+  height:185px;
+  margin:0 2rem 1rem 0;
+  overflow:hidden;
+  background:var(--surface-container-low);
+  border:1px solid rgba(10,22,40,0.1);
+}
+.message-hero-photo {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:grayscale(100%);
 }
 .message-hero-text {
   font-family:Georgia,'Times New Roman',serif;
-  font-size:clamp(1.1rem,1.8vw,1.4rem);
+  font-size:clamp(1rem,1.65vw,1.3rem);
   line-height:2;
   color:var(--foreground);
   font-style:italic;
-  margin:0 auto 3rem;
+  margin:0 0 0;
 }
 .message-hero-attribution {
+  clear:both;
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:0.4rem;
+  padding-top:1rem;
 }
 .message-hero-attribution::before {
   content:'';
