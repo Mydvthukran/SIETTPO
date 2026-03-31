@@ -9,7 +9,7 @@ import { translations } from '../translations'
    ───────────────────────────────────────────── */
 const tpo = {
   name: 'Dr. Divya Singla',
-  email: 'sietpkl@gmail.com',
+  email: 'tpo@sietpanchkula.ac.in',
   phone: '+91 92532 89394',
 }
 
