@@ -621,6 +621,7 @@ input:focus, textarea:focus, select:focus { outline: none; box-shadow: 0 0 0 2px
   line-height:1.7;
   font-style:italic;
   margin-bottom:0.75rem;
+  text-align:justify;
 }
 .message-toggle {
   display:inline-flex;
