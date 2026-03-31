@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, X, Calendar, MapPin } from 'lucide-react'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../translations'
+import { AnimatedTabs } from './ui/animated-tabs'
 
 /* ─────────────────────────────────────────────
    EVENT DATA — To add a new event, just append
@@ -156,6 +157,48 @@ export function GallerySection() {
 
   const filtered = active === 'all' ? events : events.filter(e => e.cat === active)
 
+  const tabsData = categories.map(cat => ({
+    id: cat.key,
+    label: cat.label,
+    content: (
+      <div className="event-cards-grid">
+        {(cat.key === 'all' ? events : events.filter(e => e.cat === cat.key)).map((event, i) => (
+          <motion.div
+            key={event.title}
+            className="event-card"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: i * 0.1 }}
+          >
+            <div className="event-card-image-wrap" onClick={() => setLightboxIndex(events.indexOf(event))}>
+              <img src={event.cover} alt={event.title} className="event-card-image" />
+              <div className="event-card-image-count">{event.images.length} {t.photosLabel}</div>
+            </div>
+            <div className="event-card-body">
+              <h3 className="event-card-title">{event.title}</h3>
+              <p className="event-card-subtitle">{event.subtitle}</p>
+              <p className="event-card-desc">{event.description}</p>
+              <div className="event-card-meta">
+                {event.date && (
+                  <span className="event-card-meta-item">
+                    <Calendar className="event-card-meta-icon" /> {event.date}
+                  </span>
+                )}
+                <span className="event-card-meta-item">
+                  <MapPin className="event-card-meta-icon" /> {event.location}
+                </span>
+              </div>
+              <button className="event-card-link" onClick={() => setLightboxIndex(events.indexOf(event))}>
+                {t.viewGallery}
+              </button>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    )
+  }))
+
   return (
     <section id="gallery" className="gallery-section">
       <div className="container">
@@ -171,54 +214,9 @@ export function GallerySection() {
           <p className="section-subtitle">{t.sectionSubtitle}</p>
         </motion.div>
 
-        {/* Filter Tabs */}
-        <div className="gallery-tabs">
-          {categories.map(cat => (
-            <button
-              key={cat.key}
-              className={`gallery-tab ${active === cat.key ? 'gallery-tab-active' : ''}`}
-              onClick={() => setActive(cat.key)}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Event Cards Grid */}
-        <div className="event-cards-grid">
-          {filtered.map((event, i) => (
-            <motion.div
-              key={event.title}
-              className="event-card"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-            >
-              <div className="event-card-image-wrap" onClick={() => setLightboxIndex(events.indexOf(event))}>
-                <img src={event.cover} alt={event.title} className="event-card-image" />
-                <div className="event-card-image-count">{event.images.length} {t.photosLabel}</div>
-              </div>
-              <div className="event-card-body">
-                <h3 className="event-card-title">{event.title}</h3>
-                <p className="event-card-subtitle">{event.subtitle}</p>
-                <p className="event-card-desc">{event.description}</p>
-                <div className="event-card-meta">
-                  {event.date && (
-                    <span className="event-card-meta-item">
-                      <Calendar className="event-card-meta-icon" /> {event.date}
-                    </span>
-                  )}
-                  <span className="event-card-meta-item">
-                    <MapPin className="event-card-meta-icon" /> {event.location}
-                  </span>
-                </div>
-                <button className="event-card-link" onClick={() => setLightboxIndex(events.indexOf(event))}>
-                  {t.viewGallery}
-                </button>
-              </div>
-            </motion.div>
-          ))}
+        {/* Animated Tabs */}
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '3rem' }}>
+          <AnimatedTabs tabs={tabsData} defaultTab="all" className="max-w-full" />
         </div>
       </div>
 
