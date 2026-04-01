@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Eye, EyeOff, AlertCircle, CheckCircle2 } from 'lucide-react'
@@ -14,8 +14,15 @@ export default function StudentLogin() {
   const [remember, setRemember] = useState(false)
   const [status, setStatus] = useState(null) // null | 'loading' | 'error' | 'success'
   const [errorType, setErrorType] = useState(null) // null | 'required' | 'mismatch'
+  const submitTimeoutRef = useRef(null)
   const { lang } = useLanguage()
   const t = translations[lang].login
+
+  useEffect(() => () => {
+    if (submitTimeoutRef.current) {
+      clearTimeout(submitTimeoutRef.current)
+    }
+  }, [])
 
   function handleChange(e) {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
@@ -40,7 +47,7 @@ export default function StudentLogin() {
     setErrorType(null)
     setStatus('loading')
     // Placeholder — replace with real signup API call when backend is ready
-    setTimeout(() => {
+    submitTimeoutRef.current = setTimeout(() => {
       setStatus('success')
       setForm({ rollNumber: '', password: '', confirmPassword: '' })
     }, 1200)
@@ -158,7 +165,7 @@ export default function StudentLogin() {
                   type={showPassword ? 'text' : 'password'}
                   className="login-input"
                   placeholder={t.passwordPlaceholder}
-                  autoComplete="current-password"
+                  autoComplete="new-password"
                   value={form.password}
                   onChange={handleChange}
                 />
@@ -182,7 +189,7 @@ export default function StudentLogin() {
                   type={showConfirmPassword ? 'text' : 'password'}
                   className="login-input"
                   placeholder={t.confirmPasswordPlaceholder}
-                  autoComplete="new-password"
+                  autoComplete="off"
                   value={form.confirmPassword}
                   onChange={handleChange}
                 />
