@@ -40,7 +40,10 @@ export default function StudentLogin() {
     setErrorType(null)
     setStatus('loading')
     // Placeholder — replace with real signup API call when backend is ready
-    setTimeout(() => setStatus('success'), 1200)
+    setTimeout(() => {
+      setStatus('success')
+      setForm({ rollNumber: '', password: '', confirmPassword: '' })
+    }, 1200)
   }
 
   return (
