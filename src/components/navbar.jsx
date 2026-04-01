@@ -17,13 +17,13 @@ export function Navbar() {
   const t = translations[lang].navbar
 
   const navLinks = [
-    { label: t.links[0], href: '#' },
-    { label: t.links[1], href: '#messages' },
-    { label: t.links[2], href: '#why-recruit' },
-    { label: t.links[3], href: '#batch' },
-    { label: t.links[4], href: '#gallery' },
-    { label: t.links[5], href: '#team' },
-    { label: t.links[6], href: '#contact' },
+    { label: t.links[0], sectionId: '' },
+    { label: t.links[1], sectionId: 'messages' },
+    { label: t.links[2], sectionId: 'why-recruit' },
+    { label: t.links[3], sectionId: 'batch' },
+    { label: t.links[4], sectionId: 'gallery' },
+    { label: t.links[5], sectionId: 'team' },
+    { label: t.links[6], sectionId: 'contact' },
   ]
 
   useEffect(() => {
@@ -99,14 +99,25 @@ export function Navbar() {
 
       {/* NAV BAR */}
       <nav className="navbar-nav">
-        <a href="#" className="md:hidden">
+        <button type="button" className="md:hidden" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <span className="navbar-mobile-label">{t.mobileLabel}</span>
-        </a>
+        </button>
         <div className="navbar-links">
           {navLinks.map((link) => (
-            <a key={link.label} href={link.href} className="navbar-link">
+            <button
+              key={link.label}
+              type="button"
+              className="navbar-link"
+              onClick={() => {
+                if (!link.sectionId) {
+                  window.scrollTo({ top: 0, behavior: 'smooth' })
+                  return
+                }
+                scrollTo(link.sectionId)
+              }}
+            >
               {link.label}
-            </a>
+            </button>
           ))}
         </div>
         <div className="navbar-buttons">
@@ -138,14 +149,21 @@ export function Navbar() {
       {mobileOpen && (
         <div className="navbar-mobile-menu">
           {navLinks.map((link) => (
-            <a
+            <button
               key={link.label}
-              href={link.href}
+              type="button"
               className="navbar-mobile-menu-link"
-              onClick={() => setMobileOpen(false)}
+              onClick={() => {
+                if (!link.sectionId) {
+                  window.scrollTo({ top: 0, behavior: 'smooth' })
+                } else {
+                  scrollTo(link.sectionId)
+                }
+                setMobileOpen(false)
+              }}
             >
               {link.label}
-            </a>
+            </button>
           ))}
           <div className="navbar-mobile-menu-actions">
             <div className="lang-toggle" role="group" aria-label="Language toggle">
