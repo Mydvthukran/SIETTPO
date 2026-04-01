@@ -1,12 +1,30 @@
 import { Mail, Phone } from 'lucide-react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useLanguage } from '../contexts/LanguageContext'
 import { translations } from '../translations'
 
-const quickLinkHrefs = ['#', '#batch', '#gallery', '#contact']
+const quickLinkSectionIds = ['', 'batch', 'gallery', 'contact']
 
 export function Footer() {
+  const location = useLocation()
+  const navigate = useNavigate()
   const { lang } = useLanguage()
   const t = translations[lang].footer
+
+  const handleSectionClick = (sectionId) => {
+    const target = sectionId || 'top'
+
+    if (location.pathname !== '/') {
+      navigate('/', { state: { scrollTo: target } })
+      return
+    }
+
+    if (target === 'top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      return
+    }
+    document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   return (
     <footer id="contact" className="footer">
@@ -30,9 +48,12 @@ export function Footer() {
             <ul className="footer-links">
               {t.links.map((label, i) => (
                 <li key={label}>
-                  <a href={quickLinkHrefs[i]}>
+                  <button
+                    type="button"
+                    onClick={() => handleSectionClick(quickLinkSectionIds[i])}
+                  >
                     {label}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
