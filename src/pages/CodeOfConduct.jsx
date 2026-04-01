@@ -26,7 +26,7 @@ export default function CodeOfConduct() {
     <section className="coc-page-section">
       <div className="container">
         <div className="section-header">
-          <span className="section-label">{t.title}</span>
+          <span className="section-label">{t.label || t.title}</span>
           <h2 className="section-title">{t.title}</h2>
         </div>
 

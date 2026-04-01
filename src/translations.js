@@ -246,6 +246,7 @@ export const translations = {
     },
     codeOfConduct: {
       title: 'Code of Conduct',
+      label: 'Professional Guidelines',
       back: 'Back',
       downloadPdf: 'Download PDF',
       intro: [
@@ -606,6 +607,7 @@ export const translations = {
     },
     codeOfConduct: {
       title: 'आचार संहिता',
+      label: 'Professional Guidelines',
       back: 'वापस',
       downloadPdf: 'PDF डाउनलोड करें',
       intro: [
