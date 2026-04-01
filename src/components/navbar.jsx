@@ -122,14 +122,17 @@ export function Navbar() {
         </button>
         <div className="navbar-links">
           {navLinks.map((link) => (
-            <button
+            <a
               key={link.label}
-              type="button"
               className="navbar-link"
-              onClick={() => navigateToSection(link.sectionId)}
+              href={link.sectionId ? `/#${link.sectionId}` : '/'}
+              onClick={(event) => {
+                event.preventDefault()
+                navigateToSection(link.sectionId)
+              }}
             >
               {link.label}
-            </button>
+            </a>
           ))}
         </div>
         <div className="navbar-buttons">
@@ -161,17 +164,18 @@ export function Navbar() {
       {mobileOpen && (
         <div className="navbar-mobile-menu">
           {navLinks.map((link) => (
-            <button
+            <a
               key={link.label}
-              type="button"
               className="navbar-mobile-menu-link"
-              onClick={() => {
+              href={link.sectionId ? `/#${link.sectionId}` : '/'}
+              onClick={(event) => {
+                event.preventDefault()
                 navigateToSection(link.sectionId)
                 setMobileOpen(false)
               }}
             >
               {link.label}
-            </button>
+            </a>
           ))}
           <div className="navbar-mobile-menu-actions">
             <div className="lang-toggle" role="group" aria-label="Language toggle">
