@@ -39,7 +39,7 @@ export default function StudentLogin() {
     }
     setErrorType(null)
     setStatus('loading')
-    // Placeholder — replace with real signup when backend is ready
+    // Placeholder — replace with real signup API call when backend is ready
     setTimeout(() => setStatus('success'), 1200)
   }
 
