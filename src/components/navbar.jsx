@@ -125,7 +125,7 @@ export function Navbar() {
             <a
               key={link.label}
               className="navbar-link"
-              href={link.sectionId ? `/#${link.sectionId}` : '/'}
+              href={link.sectionId ? `/#${link.sectionId}` : '/#top'}
               onClick={(event) => {
                 event.preventDefault()
                 navigateToSection(link.sectionId)
@@ -167,7 +167,7 @@ export function Navbar() {
             <a
               key={link.label}
               className="navbar-mobile-menu-link"
-              href={link.sectionId ? `/#${link.sectionId}` : '/'}
+              href={link.sectionId ? `/#${link.sectionId}` : '/#top'}
               onClick={(event) => {
                 event.preventDefault()
                 navigateToSection(link.sectionId)
