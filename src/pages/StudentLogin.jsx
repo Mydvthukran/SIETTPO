@@ -189,7 +189,7 @@ export default function StudentLogin() {
                   type={showConfirmPassword ? 'text' : 'password'}
                   className="login-input"
                   placeholder={t.confirmPasswordPlaceholder}
-                  autoComplete="off"
+                  autoComplete="new-password"
                   value={form.confirmPassword}
                   onChange={handleChange}
                 />
