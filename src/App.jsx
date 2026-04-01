@@ -7,18 +7,18 @@ import { SkillsMarquee } from './components/skills-marquee'
 import { MessageSection } from './components/message-section'
 import { WhyRecruitSection } from './components/why-recruit-section'
 import { BatchSection } from './components/batch-section'
-import { TrainingPipelineSection } from './components/training-pipeline-section'
-import { GuidelinesSection } from './components/guidelines-section'
-import { InfrastructureSection } from './components/infrastructure-section'
 import { GallerySection } from './components/gallery-section'
 import { CtaSection } from './components/cta-section'
 import { TeamSection } from './components/team-section'
 import { Footer } from './components/footer'
+import { useLanguage } from './contexts/LanguageContext'
+import { translations } from './translations'
 import StudentLogin from './pages/StudentLogin'
 import PdfViewer from './pages/PdfViewer'
 import PlacementBrochure from './pages/PlacementBrochure'
 import GuidelinesViewer from './pages/GuidelinesViewer'
 import Form from './pages/Form'
+import CodeOfConduct from './pages/CodeOfConduct'
 
 function Home() {
   const location = useLocation()
@@ -46,13 +46,65 @@ function Home() {
       <SkillsMarquee />
       <MessageSection />
       <WhyRecruitSection />
-      <BatchSection />
-      <TrainingPipelineSection />
-      <GuidelinesSection />
-      {/* <InfrastructureSection /> */}
-      <GallerySection />
       <CtaSection />
+      <Footer />
+      <Chatbot />
+    </main>
+  )
+}
+
+function EventsPage() {
+  return (
+    <main>
+      <Navbar />
+      <GallerySection />
+      <Footer />
+      <Chatbot />
+    </main>
+  )
+}
+
+function BatchPage() {
+  return (
+    <main>
+      <Navbar />
+      <BatchSection />
+      <Footer />
+      <Chatbot />
+    </main>
+  )
+}
+
+function TeamPage() {
+  return (
+    <main>
+      <Navbar />
       <TeamSection />
+      <Footer />
+      <Chatbot />
+    </main>
+  )
+}
+
+function ContactPage() {
+  const { lang } = useLanguage()
+  const t = translations[lang].contactPage
+
+  return (
+    <main>
+      <Navbar />
+      <section className="py-20 bg-parchment">
+        <div className="container text-center">
+          <span className="section-label">{t.label}</span>
+          <h2 className="section-title">{t.title}</h2>
+          <p className="section-subtitle">{t.subtitle}</p>
+          <div className="mt-8">
+            <a href="mailto:tpo@sietpanchkula.ac.in" className="gradient-button inline-flex items-center">
+              {t.emailCta}
+            </a>
+          </div>
+        </div>
+      </section>
       <Footer />
       <Chatbot />
     </main>
@@ -63,6 +115,11 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/events" element={<EventsPage />} />
+      <Route path="/code-of-conduct" element={<CodeOfConduct />} />
+      <Route path="/batch-2025" element={<BatchPage />} />
+      <Route path="/team" element={<TeamPage />} />
+      <Route path="/contact-us" element={<ContactPage />} />
       <Route path="/login" element={<StudentLogin />} />
       <Route path="/pdf-viewer" element={<PdfViewer />} />
       <Route path="/placement-brochure" element={<PlacementBrochure />} />

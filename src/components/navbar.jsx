@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import { GradientButton } from './ui/gradient-button'
 import { useLanguage } from '../contexts/LanguageContext'
@@ -12,19 +12,17 @@ function scrollTo(id) {
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const location = useLocation()
   const navigate = useNavigate()
   const { lang, toggleLang } = useLanguage()
   const t = translations[lang].navbar
 
   const navLinks = [
-    { label: t.links[0], sectionId: '' },
-    { label: t.links[1], sectionId: 'messages' },
-    { label: t.links[2], sectionId: 'why-recruit' },
-    { label: t.links[3], sectionId: 'batch' },
-    { label: t.links[4], sectionId: 'gallery' },
-    { label: t.links[5], sectionId: 'team' },
-    { label: t.links[6], sectionId: 'contact' },
+    { label: t.links[0], type: 'route', value: '/' },
+    { label: t.links[1], type: 'route', value: '/events' },
+    { label: t.links[2], type: 'route', value: '/code-of-conduct' },
+    { label: t.links[3], type: 'route', value: '/batch-2025' },
+    { label: t.links[4], type: 'route', value: '/team' },
+    { label: t.links[5], type: 'route', value: '/contact-us' },
   ]
 
   useEffect(() => {
@@ -34,20 +32,12 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const navigateToSection = (sectionId) => {
-    const target = sectionId || 'top'
+  const navigateToLink = (link) => {
+    navigate(link.value)
+  }
 
-    if (location.pathname !== '/') {
-      navigate('/', { state: { scrollTo: target } })
-      return
-    }
-
-    if (target === 'top') {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      return
-    }
-
-    scrollTo(target)
+  const getLinkHref = (link) => {
+    return link.value
   }
 
   return (
@@ -117,7 +107,7 @@ export function Navbar() {
 
       {/* NAV BAR */}
       <nav className="navbar-nav">
-        <button type="button" className="md:hidden" onClick={() => navigateToSection('')}>
+        <button type="button" className="md:hidden" onClick={() => navigate('/')}>
           <span className="navbar-mobile-label">{t.mobileLabel}</span>
         </button>
         <div className="navbar-links">
@@ -125,11 +115,11 @@ export function Navbar() {
             <a
               key={link.label}
               className="navbar-link"
-              href={link.sectionId ? `/#${link.sectionId}` : '/#top'}
-              onClick={(event) => {
-                event.preventDefault()
-                navigateToSection(link.sectionId)
-              }}
+               href={getLinkHref(link)}
+               onClick={(event) => {
+                 event.preventDefault()
+                 navigateToLink(link)
+               }}
             >
               {link.label}
             </a>
@@ -167,12 +157,12 @@ export function Navbar() {
             <a
               key={link.label}
               className="navbar-mobile-menu-link"
-              href={link.sectionId ? `/#${link.sectionId}` : '/#top'}
-              onClick={(event) => {
-                event.preventDefault()
-                navigateToSection(link.sectionId)
-                setMobileOpen(false)
-              }}
+               href={getLinkHref(link)}
+               onClick={(event) => {
+                 event.preventDefault()
+                 navigateToLink(link)
+                 setMobileOpen(false)
+               }}
             >
               {link.label}
             </a>
