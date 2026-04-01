@@ -19,11 +19,11 @@ export function Navbar() {
   const navLinks = [
     { label: t.links[0], type: 'route', value: '/' },
     { label: t.links[1], type: 'route', value: '/events' },
-    { label: t.links[2], type: 'route', value: '/code-of-conduct' },
-    { label: t.links[3], type: 'route', value: '/batch-2025' },
-    { label: t.links[4], type: 'route', value: '/team' },
-    { label: t.links[5], type: 'route', value: '/contact-us' },
-    { label: t.links[6], type: 'route', value: '/placement-brochure' },
+    { label: t.links[2], type: 'route', value: '/placement-brochure' },
+    { label: t.links[3], type: 'route', value: '/code-of-conduct' },
+    { label: t.links[4], type: 'route', value: '/batch-2025' },
+    { label: t.links[5], type: 'route', value: '/team' },
+    { label: t.links[6], type: 'route', value: '/contact-us' },
   ]
 
   useEffect(() => {
