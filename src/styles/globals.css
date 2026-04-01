@@ -1232,7 +1232,7 @@ input:focus, textarea:focus, select:focus { outline: none; box-shadow: 0 0 0 2px
    CTA — Dark navy section with gold button
    ═══════════════════════════════════════ */
 .cta-section {
-  background-color:var(--ink);
+  background-color:var(--surface-container-low);
   padding:6rem 0;
   position:relative;
   overflow:hidden;
@@ -1251,11 +1251,11 @@ input:focus, textarea:focus, select:focus { outline: none; box-shadow: 0 0 0 2px
   font-family:var(--font-headline);
   font-size:1.875rem; font-weight:700;
   letter-spacing:-0.025em;
-  color:var(--parchment);
+  color:var(--foreground);
   text-wrap:balance;
 }
 @media (min-width:768px) { .cta-title { font-size:2.25rem; } }
-.cta-description { margin-top:1rem; font-size:1.125rem; line-height:1.75rem; color:rgba(245,240,232,0.7); }
+.cta-description { margin-top:1rem; font-size:1.125rem; line-height:1.75rem; color:var(--muted-foreground); }
 .cta-button-wrapper { margin-top:2rem; display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; }
 .cta-link { text-decoration:none; }
 
@@ -1403,38 +1403,7 @@ input:focus, textarea:focus, select:focus { outline: none; box-shadow: 0 0 0 2px
    ═══════════════════════════════════════ */
 .gallery-section {
   background:var(--surface-container-low);
-  padding:5rem 0;
-}
-.gallery-tabs {
-  display:flex;
-  justify-content:center;
-  gap:0.5rem;
-  margin-bottom:3rem;
-}
-.gallery-tab {
-  font-family:var(--font-body);
-  font-size:0.8rem; font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:0.08em;
-  padding:0.5rem 1.25rem;
-  background:transparent;
-  border:1px solid rgba(10,22,40,0.1);
-  color:var(--muted-foreground);
-  cursor:pointer;
-  transition:all 0.3s, transform 0.3s;
-  position:relative;
-}
-.gallery-tab:hover {
-  border-color:var(--gold);
-  color:var(--gold);
-  transform:translateY(-2px);
-}
-.gallery-tab-active {
-  background:var(--gold);
-  color:var(--ink);
-  border-color:var(--gold);
-  transform:translateY(-2px);
-  box-shadow:0 4px 12px rgba(201,146,42,0.25);
+  padding:16rem 0 5rem;
 }
 
 /* Event Cards Grid */

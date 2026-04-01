@@ -150,10 +150,7 @@ export const translations = {
     gallery: {
       sectionLabel: 'Highlights',
       sectionTitle: 'Events & Gallery',
-      sectionSubtitle: 'Selected events, drives, and campus highlights from SIET Panchkula.',
-      filterAll: 'All',
-      filterEvents: 'Events',
-      filterCampus: 'Campus',
+      sectionSubtitle: 'Selected events and expert sessions from SIET Panchkula.',
       viewGallery: 'View Gallery →',
       photosLabel: 'photos',
       events: [
@@ -174,12 +171,12 @@ export const translations = {
           location: 'Conference Room, SIET Panchkula',
         },
         {
-          title: 'Campus & Infrastructure',
-          subtitle: 'SIET Panchkula Facilities',
+          title: 'GFG Expert Lecture',
+          subtitle: 'GeeksforGeeks Campus Session',
           description:
-            "A visual tour of SIET Panchkula's modern academic block, IoT research lab, central library, seminar hall, and project workshop spaces.",
-          date: '',
-          location: 'SIET Panchkula Campus',
+            'An expert-led GeeksforGeeks session focused on coding readiness, problem-solving strategy, and practical placement preparation for students.',
+          date: '2026',
+          location: 'SIET Panchkula',
         },
       ],
     },
@@ -430,10 +427,7 @@ export const translations = {
     gallery: {
       sectionLabel: 'मुख्य आकर्षण',
       sectionTitle: 'कार्यक्रम एवं गैलरी',
-      sectionSubtitle: 'SIET पंचकुला के चुनिंदा कार्यक्रम, ड्राइव और परिसर के मुख्य आकर्षण।',
-      filterAll: 'सभी',
-      filterEvents: 'कार्यक्रम',
-      filterCampus: 'परिसर',
+      sectionSubtitle: 'SIET पंचकुला के चुनिंदा कार्यक्रम और विशेषज्ञ सत्र।',
       viewGallery: 'गैलरी देखें →',
       photosLabel: 'फ़ोटो',
       events: [
@@ -454,12 +448,12 @@ export const translations = {
           location: 'कॉन्फ्रेंस रूम, SIET पंचकुला',
         },
         {
-          title: 'परिसर एवं बुनियादी ढांचा',
-          subtitle: 'SIET पंचकुला सुविधाएँ',
+          title: 'GFG विशेषज्ञ व्याख्यान',
+          subtitle: 'GeeksforGeeks कैंपस सत्र',
           description:
-            'SIET पंचकुला के आधुनिक अकादमिक ब्लॉक, IoT अनुसंधान प्रयोगशाला, केंद्रीय पुस्तकालय, सेमिनार हॉल और प्रोजेक्ट वर्कशॉप का दृश्य भ्रमण।',
-          date: '',
-          location: 'SIET पंचकुला परिसर',
+            'GeeksforGeeks द्वारा आयोजित विशेषज्ञ सत्र जिसमें कोडिंग तैयारी, समस्या-समाधान रणनीति और प्लेसमेंट उन्मुख व्यावहारिक मार्गदर्शन दिया गया।',
+          date: '2026',
+          location: 'SIET पंचकुला',
         },
       ],
     },
